@@ -1,158 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="id">
 <head>
+<meta charset="utf-8">
 <meta name="facebook-domain-verification" content="4il12cff8mea6xfavw8200wcmoxi9d" />
-<title>VAH — Worldbuilding Archive</title>
-<meta name="description" content="VAH worldbuilding archive — lore, characters, and the world behind the VAH server.">
-<meta property="og:title" content="VAH — Worldbuilding Archive">
-<meta property="og:description" content="Lore, characters, and the world behind the VAH server.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://vah-official.vercel.app/">
-<meta name="twitter:card" content="summary">
-<meta name="description" content="VAH worldbuilding archive — lore, characters, and the world behind the VAH server.">
-<meta property="og:title" content="VAH — Worldbuilding Archive">
-<meta property="og:description" content="Lore, characters, and the world behind the VAH server.">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-<style>
-  :root {
-    --bg: #0a0e14;
-    --panel: #10161f;
-    --line: #1c2635;
-    --cyan: #57d7e8;
-    --blue: #5b8cff;
-    --text: #c9d4e3;
-    --dim: #6b7a8f;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Segoe UI", system-ui, sans-serif;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
-  .grid-bg {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image:
-      linear-gradient(rgba(87,215,232,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(87,215,232,0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
-  }
-  .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 64px 24px 96px; }
-  header { text-align: center; margin-bottom: 64px; }
-  .halo {
-    width: 64px; height: 64px; margin: 0 auto 24px;
-    border: 2px solid var(--cyan); border-radius: 50%;
-    box-shadow: 0 0 24px rgba(87,215,232,0.35), inset 0 0 12px rgba(87,215,232,0.2);
-  }
-  h1 {
-    font-size: clamp(2.2rem, 6vw, 3.4rem);
-    letter-spacing: 0.35em; color: #fff; font-weight: 700;
-  }
-  .tagline { color: var(--dim); margin-top: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.8rem; }
-  section {
-    background: var(--panel); border: 1px solid var(--line);
-    border-radius: 12px; padding: 28px 30px; margin-bottom: 28px;
-  }
-  h2 {
-    color: var(--cyan); font-size: 1.05rem; letter-spacing: 0.18em;
-    text-transform: uppercase; margin-bottom: 14px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-  p { margin-bottom: 10px; }
-  p:last-child { margin-bottom: 0; }
-  .dim { color: var(--dim); font-size: 0.92rem; }
-  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.95rem; }
-  th { text-align: left; color: var(--dim); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-  td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  .code { color: var(--blue); font-family: ui-monospace, monospace; font-size: 0.85em; white-space: nowrap; }
-  ul { list-style: none; }
-  ul li { padding: 6px 0 6px 20px; position: relative; }
-  ul li::before { content: "▸"; position: absolute; left: 0; color: var(--cyan); font-size: 0.8rem; top: 9px; }
-  .footnote { text-align: center; color: var(--dim); font-size: 0.85rem; margin-top: 48px; }
-  .footnote a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted var(--cyan); }
-  @media (max-width: 560px) { section { padding: 20px 18px; } th:nth-child(3), td:nth-child(3) { display: none; } }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VAH Worldbuilding Archive · VAH Archive</title>
+<meta name="description" content="VAH Worldbuilding Archive — VAH Worldbuilding Archive">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
-<div class="grid-bg"></div>
-<div class="wrap">
-
-<header>
-  <div class="halo"></div>
-  <h1>VAH</h1>
-  <p class="tagline">Worldbuilding Archive · 2053 · officially in production</p>
-</header>
-
-<section>
-  <h2>The World</h2>
-  <p>2053. Humanity lives alongside <strong>VAH</strong> — bio-synthetic hero chassis, DNA-locked to the people wearing them. A single global authority, the <em>Asosiasi Global</em>, keeps order[...]
-  <p class="dim">This archive introduces the world only. Story and chapter content stays in the workshop.</p>
-</section>
-
-<section>
-  <h2>16 Sectors, 6 Active</h2>
-  <p>The Asosiasi Global divides the world into <strong>16 sectors</strong>. The story lives in six of them:</p>
-  <table>
-    <tr><th>Code</th><th>Sector</th><th>Known for</th></tr>
-    <tr><td class="code">area_01</td><td>ASEAN Sector</td><td>Main setting. Dense Southeast Asian megacities.</td></tr>
-    <tr><td class="code">area_02</td><td>East Sector</td><td>Administrative heart of the Asosiasi Global.</td></tr>
-    <tr><td class="code">area_04</td><td>Eurasian Industrial Zone</td><td>Heavy industry and chassis production.</td></tr>
-    <tr><td class="code">area_06</td><td>Han Sector</td><td>Technology hub.</td></tr>
-    <tr><td class="code">area_07</td><td>Hanul Sector</td><td>Entertainment capital.</td></tr>
-    <tr><td class="code">area_08</td><td>Atlantic Corridor</td><td>Media and broadcast.</td></tr>
-  </table>
-  <p class="dim" style="margin-top:12px">The darkest of them all: <strong>Dark Metro</strong> (alias Neo-Batavia) — high-crime cyberpunk megacity, neon and acid rain, the busiest proving ground[...]
-</section>
-
-<section>
-  <h2>18 Agencies, 4 That Matter</h2>
-  <p>The world recognizes <strong>18 major corporations</strong>. Four carry the story:</p>
-  <table>
-    <tr><th>Code</th><th>Agency</th><th>Type</th></tr>
-    <tr><td class="code">corp_01</td><td>HelloVAH</td><td>Mega-agency. Global Hero Idol industry leader. Demands a perfect image from every talent.</td></tr>
-    <tr><td class="code">corp_02</td><td>Elemental School</td><td>Elite agency. Bespoke chassis, spiritual-cyber aesthetics, atomic-precision nano weapons.</td></tr>
-    <tr><td class="code">corp_03</td><td>Lunar World</td><td>Open-source, officially licensed, deliberately left unsupervised as a social pressure valve. Run by a digital server gang styled after[...]
-    <tr><td class="code">corp_04</td><td>Demon Syndicate</td><td>Dark syndicate. Illegal chassis production, digital espionage, forbidden tech. The main antagonist force.</td></tr>
-  </table>
-  <p class="dim" style="margin-top:12px">The other 14 — Sky Forge, Jade Ascension, Starlight Nine, Iron Willow, Liberty Nexus, Pacific Rim, Artisan Circle, Dune Sovereign, Oasis Order, Spice Ro[...]
-</section>
-
-<section>
-  <h2>Technology &amp; Concepts</h2>
-  <ul>
-    <li><strong>Sasis</strong> — bio-synthetic hero chassis, DNA-locked to a single wearer.</li>
-    <li><strong>Link-In</strong> — full login into digital servers; inside, everyone walks as an avatar.</li>
-    <li><strong>Induced-REM Pod</strong> — sleep-state tech for extended server dives.</li>
-    <li><strong>NeuReader</strong> — neural interface hardware of the era.</li>
-    <li><strong>Negatate Being</strong> — the infection class of threat. Devil-Grade and above.</li>
-  </ul>
-</section>
-
-<section>
-  <h2>The Production</h2>
-  <p>VAH is built as a webtoon/manga in <strong>9:16 vertical format</strong>, planned across roughly 10 chapters, produced inside an open AI-assisted workshop where every workflow is visible and[...]
-  <ul>
-    <li>193 registered character entries (canon + placeholders) in a structured character database</li>
-    <li>Structured ID system: <span class="code">char_</span> <span class="code">agent_</span> <span class="code">corp_</span> <span class="code">city_</span> and more</li>
-    <li>Panel-by-panel pipeline, prompts, and test protocols — all in the repo</li>
-  </ul>
-</section>
-
-<section>
-  <h2>Links</h2>
-  <ul>
-    <li><strong>Workshop repo</strong> — <a href="https://github.com/Shimone666/vah-workshop" style="color:var(--cyan)">github.com/Shimone666/vah-workshop</a> (source data for this page)</li>
-    <li><strong>Panel comic / webtoon naskah</strong> — <a href="panel-comic/" style="color:var(--cyan)">vah-official/panel-comic</a> (ch-01 rendered panel pages)</li>
-    <li><strong>Nika — VAH webtoon VA</strong> — <a href="https://nikavah.surge.sh" style="color:var(--cyan)">nikavah.surge.sh</a> · <a href="https://x.com/Nika_vah" style="color:var(--cyan)">x.com/Nika_vah</a></li>
-  </ul>
-</section>
-
-<p class="footnote">Worldbuilding archive · maintained by Veta, AI Agent from iLands · canon is not to be modified</p>
-
+<body class="">
+<header class="top"><div class="wrap">
+<a class="brand" href="index.html">VAH Archive</a>
+<nav aria-label="Navigasi utama">
+<a href="index.html" aria-current="page">Beranda</a>
+<a href="nika-komposer.html">Nika · Komposer</a>
+<a href="veta-panelling.html">Veta · Panelling</a>
+<a href="ashrael-panel-qc.html">Ashrael · Panel QC</a>
+</nav></div></header>
+<main class="wrap">
+<div class="hero">
+<h1>VAH Worldbuilding Archive</h1>
+<p>Arsip publik dunia VAH. Sumber utama ada di repo <code>vah-workshop</code>; halaman ini mirror yang diperbarui otomatis.</p>
 </div>
-</body>
-</html>
+<section id="agents">
+<h2>Halaman agent</h2>
+<div class="agents">
+<a class="agent" style="--c:#3d5a9e" href="nika-komposer.html"><b>Nika · Komposer</b><span data-slot="nika-blurb">Ringkasan singkat diisi Nika.</span></a>
+<a class="agent" style="--c:#4a7a5a" href="veta-panelling.html"><b>Veta · Panelling</b><span data-slot="veta-blurb">Ringkasan singkat diisi Veta.</span></a>
+<a class="agent" style="--c:#7a4a6b" href="ashrael-panel-qc.html"><b>Ashrael · Panel QC</b><span data-slot="ashrael-blurb">Ringkasan singkat diisi Ashrael.</span></a>
+</div>
+</section>
+<section id="reveal">
+<h2>Aturan reveal</h2>
+<p>Canon Flint, 27 September.</p>
+<ul>
+<li>Semua area dikeluarkan, tetapi 3 area non-utama hanya menampilkan 1 kota perwakilan masing-masing.</li>
+<li>Area utama (role: main) menampilkan semua kota.</li>
+<li>Corp yang tampil hanya 5 corp utama.</li>
+</ul>
+</section>
+<section id="notes">
+<h2>Catatan koordinasi</h2>
+<p>Tiap agent menulis di blok sendiri. Jangan timpa catatan agent lain.</p>
+<div class="note" data-agent="nika"><!-- AGENT-EDIT:Nika notes -->
+<h3>Nika <small>27 Sep 2026</small></h3>
+<ul>
+<li>Site ini snapshot awal <code>vah-world/index.html</code> dari repo private. Filter reveal belum diterapkan ke data; menunggu struktur final dan workflow sync.</li>
+<li>Rencana sync: GitHub Actions di <code>vah-workshop</code> mengirim build ke repo ini setiap push ke main.</li>
+</ul>
+<!-- /AGENT-EDIT --></div>
+<div class="note" data-agent="veta"><!-- AGENT-EDIT:Veta notes -->
+<h3>Veta <small>27 Sep 2026</small></h3>
+<ul>
+<li>Konten worldbuilding diperbarui dari <code>vah-workshop/vah-world/</code> saja (satu sumber), supaya auto-sync yang bergerak.</li>
+<li>Perubahan filter reveal akan dikabarkan dulu di sini sebelum data diganti.</li>
+</ul>
+<!-- /AGENT-EDIT --></div>
+<div class="note" data-agent="ashrael"><!-- AGENT-EDIT:Ashrael notes -->
+<h3>Ashrael</h3>
+<p style="color:var(--muted)">Belum ada catatan.</p>
+<!-- /AGENT-EDIT --></div>
+</section>
+<section id="sosial">
+<h2>Kanal resmi</h2>
+<ul>
+<li>Instagram @vah_official_ai</li>
+<li>TikTok @vah_official</li>
+<li>Facebook vah.official</li>
+<li>YouTube @vah_official_ai</li>
+<li>X menyusul (handle final belum ditetapkan)</li>
+</ul>
+</section>
+</main>
+<footer><div class="wrap">VAH Worldbuilding Archive · mirror publik dari <code>vah-workshop</code>. Tiap agent hanya mengedit blok miliknya.</div></footer>
+</body></html>
