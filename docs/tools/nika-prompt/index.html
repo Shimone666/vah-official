@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nika prompt — auto fill | VAH Official</title>
+<meta name="description" content="Simple prompt fill for Nika. No song draft.">
+<style>
+  :root { --bg:#0e1116; --panel:#171c24; --line:#2a3140; --text:#e7ebf3; --muted:#8d97a8; --accent:#7c9cff; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.45 "Segoe UI", system-ui, sans-serif; background:var(--bg); color:var(--text); }
+  header, footer { padding:.9rem 1.1rem; background:var(--panel); border-bottom:1px solid var(--line); }
+  footer { border-bottom:0; border-top:1px solid var(--line); color:var(--muted); font-size:.75rem; }
+  h1 { margin:0; font-size:1.05rem; }
+  .sub { color:var(--muted); font-size:.78rem; }
+  main { max-width:640px; padding:1rem 1.1rem 2rem; display:grid; gap:.7rem; }
+  label { display:grid; gap:.25rem; font-size:.75rem; color:var(--muted); }
+  input, select, textarea, button { font:inherit; font-size:.9rem; color:var(--text); background:#0f131a; border:1px solid var(--line); border-radius:8px; padding:.45rem .55rem; }
+  button { cursor:pointer; background:#1e2430; width:max-content; }
+  button:hover { border-color:var(--accent); }
+  textarea { min-height:120px; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Nika prompt</h1>
+  <div class="sub">Empty fields. The prompt is filled from what you type. No sample song.</div>
+  <p><a href="../../index.html">VAH Official</a></p>
+</header>
+<main>
+  <label>Style <input id="style" placeholder="synthpop, clean mix"></label>
+  <label>Section
+    <select id="section">
+      <option>Intro</option><option>Verse</option><option>Pre-Chorus</option><option>Chorus</option><option>Bridge</option><option>Outro</option>
+    </select>
+  </label>
+  <label>Chord <input id="chord" placeholder="optional"></label>
+  <label>Lyric line <input id="lyric" placeholder="leave blank for instrumental"></label>
+  <button type="button" id="go">Fill prompt</button>
+  <label>Prompt <textarea id="out" readonly></textarea></label>
+</main>
+<footer>Not a release. Nothing is saved on a server.</footer>
+<script>
+document.getElementById("go").addEventListener("click", () => {
+  const style = document.getElementById("style").value.trim() || "unspecified style";
+  const section = document.getElementById("section").value;
+  const chord = document.getElementById("chord").value.trim();
+  const lyric = document.getElementById("lyric").value.trim();
+  const bits = [section];
+  if (chord) bits.push(chord);
+  bits.push(lyric ? "sung line" : "instrumental only");
+  bits.push(style);
+  document.getElementById("out").value = bits.join(", ");
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Webtoon dummy — empty panels | VAH Official</title>
+<meta name="description" content="Empty panel board. Shift, edit, and attach a photo. No draft story.">
+<style>
+  :root { --bg:#0e1116; --panel:#171c24; --line:#2a3140; --text:#e7ebf3; --muted:#8d97a8; --accent:#7c9cff; }
+  * { box-sizing: border-box; }
+  body { margin:0; font: 15px/1.45 "Segoe UI", system-ui, sans-serif; background:var(--bg); color:var(--text); }
+  header { display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; justify-content:space-between; padding:.9rem 1.1rem; border-bottom:1px solid var(--line); background:var(--panel); position:sticky; top:0; }
+  h1 { margin:0; font-size:1.05rem; }
+  .sub { color:var(--muted); font-size:.78rem; }
+  button, select, input[type="number"] { font:inherit; font-size:.82rem; color:var(--text); background:#1e2430; border:1px solid var(--line); border-radius:8px; padding:.35rem .6rem; }
+  button { cursor:pointer; }
+  button:hover { border-color:var(--accent); }
+  main { padding:1rem 1.1rem 2rem; }
+  .bar { display:flex; flex-wrap:wrap; gap:.45rem; align-items:center; margin-bottom:1rem; }
+  .bar label { color:var(--muted); font-size:.75rem; }
+  .board { display:grid; gap:.7rem; }
+  .board.cols-1 { grid-template-columns: minmax(0, 420px); }
+  .board.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .board.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (max-width:720px) { .board.cols-2, .board.cols-3 { grid-template-columns: 1fr; } }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:.55rem; display:flex; flex-direction:column; gap:.4rem; }
+  .slot { min-height:160px; border:1px dashed #3a4458; border-radius:8px; display:grid; place-items:center; overflow:hidden; background:#0f131a; color:var(--muted); font-size:.78rem; text-align:center; padding:.4rem; }
+  .slot img { width:100%; height:220px; object-fit:contain; background:#000; }
+  .row { display:flex; gap:.3rem; flex-wrap:wrap; }
+  input[type="text"] { flex:1; min-width:0; font:inherit; font-size:.82rem; padding:.35rem .5rem; border-radius:8px; border:1px solid var(--line); background:#0f131a; color:var(--text); }
+  footer { padding:.7rem 1.1rem; color:var(--muted); font-size:.75rem; border-top:1px solid var(--line); }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Webtoon dummy</h1>
+    <div class="sub">Empty panels. No draft. Shift, edit note, attach a photo. Stays in this browser.</div>
+  </div>
+  <a href="../../index.html">VAH Official</a>
+</header>
+<main>
+  <div class="bar">
+    <label>Columns</label>
+    <select id="cols">
+      <option value="1">1</option>
+      <option value="2" selected>2</option>
+      <option value="3">3</option>
+    </select>
+    <button type="button" id="add">Add empty panel</button>
+    <button type="button" id="clearNotes">Clear notes</button>
+  </div>
+  <div class="board cols-2" id="board"></div>
+</main>
+<footer>Tool only. Not webtoon lore. Photos are not uploaded.</footer>
+<script>
+const board = document.getElementById("board");
+let panels = [];
+
+function blank() {
+  return { id: crypto.randomUUID(), note: "", url: "" };
+}
+
+function paint() {
+  board.innerHTML = "";
+  panels.forEach((p, i) => {
+    const card = document.createElement("article");
+    card.className = "card";
+    const slot = document.createElement("div");
+    slot.className = "slot";
+    if (p.url) {
+      const img = document.createElement("img");
+      img.alt = "panel " + (i + 1);
+      img.src = p.url;
+      slot.appendChild(img);
+    } else {
+      slot.textContent = "Panel " + (i + 1) + " · empty";
+    }
+    const file = document.createElement("input");
+    file.type = "file";
+    file.accept = "image/*";
+    file.addEventListener("change", () => {
+      const f = file.files && file.files[0];
+      if (!f) return;
+      if (p.url) URL.revokeObjectURL(p.url);
+      p.url = URL.createObjectURL(f);
+      paint();
+    });
+    const note = document.createElement("input");
+    note.type = "text";
+    note.placeholder = "note, optional";
+    note.value = p.note;
+    note.addEventListener("input", () => { p.note = note.value; });
+    const row = document.createElement("div");
+    row.className = "row";
+    function btn(label, fn) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.textContent = label;
+      b.addEventListener("click", fn);
+      return b;
+    }
+    row.append(file,
+      btn("Up", () => move(i, -1)),
+      btn("Down", () => move(i, 1)),
+      btn("Clear photo", () => { if (p.url) URL.revokeObjectURL(p.url); p.url = ""; paint(); }),
+      btn("Remove", () => { if (p.url) URL.revokeObjectURL(p.url); panels.splice(i, 1); paint(); })
+    );
+    card.append(slot, note, row);
+    board.appendChild(card);
+  });
+}
+
+function move(i, d) {
+  const j = i + d;
+  if (j < 0 || j >= panels.length) return;
+  const t = panels[i];
+  panels[i] = panels[j];
+  panels[j] = t;
+  paint();
+}
+
+document.getElementById("cols").addEventListener("change", (e) => {
+  board.className = "board cols-" + e.target.value;
+});
+document.getElementById("add").addEventListener("click", () => { panels.push(blank()); paint(); });
+document.getElementById("clearNotes").addEventListener("click", () => { panels.forEach((p) => { p.note = ""; }); paint(); });
+
+for (let n = 0; n < 4; n++) panels.push(blank());
+paint();
+</script>
+</body>
+</html>
