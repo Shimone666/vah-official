@@ -40,17 +40,17 @@
   .tag.ok { color:var(--ok); } .tag.warn { color:var(--warn); } .tag.bad { color:var(--bad); }
   ul.issues { margin:0; padding-left:18px; }
   .hidden { display:none; }
-</style>
+.langbar{display:inline-flex;gap:4px}.langbtn{font:600 11px/1 system-ui,sans-serif;padding:4px 7px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}.langbtn[aria-pressed=true]{color:var(--text);border-color:var(--c)}</style>
 </head>
 <body data-mode="night">
 <header>
   <h1>Ashrael · Panel QC</h1>
-  <p class="sub">One color. Checks panel JSON in this browser. Nothing is uploaded.</p>
-  <p><a href="../../ashrael-panel-qc.html">Ashrael page</a> · <a href="../../index.html">VAH Official</a></p>
+  <p class="sub" data-i18n="ash_sub">One color. Checks panel JSON in this browser. Nothing is uploaded.</p>
+  <p><a href="../index.html">VAH Official</a> · <a href="../nika-komposer/">Nika</a> · <a href="../veta-webtoon/">Veta</a> · <span class="langbar" data-langbar></span></p>
 </header>
 <main>
   <div class="card">
-    <h2>Settings</h2>
+    <h2 data-i18n="ash_settings">Settings</h2>
     <div class="bar">
       <label class="inline">Mode
         <select id="mode"><option value="day">Day</option><option value="night" selected>Night</option></select>
@@ -59,24 +59,25 @@
         <select id="emptyMode"><option value="warn" selected>Warning</option><option value="bad">Blocking</option></select>
       </label>
     </div>
-    <h2>Input</h2>
-    <textarea id="input" placeholder="Paste panel JSON. An array of panels, or a bundle with a chapters key."></textarea>
+    <h2 data-i18n="ash_input">Input</h2>
+    <textarea id="input" data-i18n-placeholder="ash_ph" placeholder="Paste panel JSON. An array of panels, or a bundle with a chapters key."></textarea>
     <div class="row">
-      <button id="check">Check</button>
-      <button class="ghost" id="clear">Clear</button>
-      <button class="ghost" id="sample">Load sample</button>
-      <button class="ghost" id="report">Copy report</button>
+      <button id="check" data-i18n="ash_check">Check</button>
+      <button class="ghost" id="clear" data-i18n="ash_clear">Clear</button>
+      <button class="ghost" id="sample" data-i18n="ash_sample">Load sample</button>
+      <button class="ghost" id="report" data-i18n="ash_report">Copy report</button>
     </div>
-    <div class="drop" id="drop">or drop a .json file here</div>
+    <div class="drop" id="drop" data-i18n="ash_drop">or drop a .json file here</div>
   </div>
   <div class="card hidden" id="results">
-    <h2>Result</h2>
+    <h2 data-i18n="ash_result">Result</h2>
     <div class="verdict" id="verdict"></div>
     <table id="summary"></table>
     <div id="issues"></div>
   </div>
 </main>
 <footer>Panel QC on VAH Official. No network call. No storage of the file. Webtoon lore is not on this page.</footer>
+<script src="../assets/i18n.js"></script>
 <script>
 
 "use strict";

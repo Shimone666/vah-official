@@ -106,7 +106,8 @@
     <a href="../veta-webtoon/">Veta Webtoon</a>
     <a href="../ashrael-panel-qc/">Panel QC</a>
     <span style="flex:1"></span>
-    <button class="modebtn" type="button" id="modeBtn">Day / Night</button>
+    <span class="langbar" data-langbar></span>
+    <button class="modebtn" type="button" id="modeBtn" data-i18n="daynight">Day / Night</button>
   </div>
 </div>
 
@@ -114,17 +115,17 @@
   <div class="toolbar-top">
     <div>
       <h1 style="font:500 30px/1.15 var(--serif);margin:0 0 4px">Nika Composer</h1>
-      <p class="muted" style="margin:0;font-size:.9rem">Grid beat · timestamp terkunci · prompt musik format standar</p>
+      <p class="muted" style="margin:0;font-size:.9rem" data-i18n="nika_sub">Grid beat · timestamp terkunci · prompt musik format standar</p>
     </div>
     <div class="btnrow">
-      <button class="b" type="button" onclick="addLine()">+ Baris</button>
-      <button class="b" type="button" onclick="addSection()">+ Sub judul</button>
-      <button class="b" type="button" onclick="addInstrumental()">+ Instrumental</button>
-      <button class="b" type="button" onclick="ensureInstrGaps()">Isi jeda instrumental</button>
-      <button class="b" type="button" onclick="recalcAll()">Recalc timestamp</button>
-      <button class="b solid" type="button" onclick="exportAll()">Refresh export</button>
-      <button class="b ghost" type="button" onclick="saveLocal()">Save lokal</button>
-      <button class="b ghost" type="button" onclick="loadLocal()">Load lokal</button>
+      <button class="b" type="button" onclick="addLine()" data-i18n="nika_addline">+ Baris</button>
+      <button class="b" type="button" onclick="addSection()" data-i18n="nika_addsec">+ Sub judul</button>
+      <button class="b" type="button" onclick="addInstrumental()" data-i18n="nika_addins">+ Instrumental</button>
+      <button class="b" type="button" onclick="ensureInstrGaps()" data-i18n="nika_gaps">Isi jeda instrumental</button>
+      <button class="b" type="button" onclick="recalcAll()" data-i18n="nika_recalc">Recalc timestamp</button>
+      <button class="b solid" type="button" onclick="exportAll()" data-i18n="nika_export">Refresh export</button>
+      <button class="b ghost" type="button" onclick="saveLocal()" data-i18n="nika_save">Save lokal</button>
+      <button class="b ghost" type="button" onclick="loadLocal()" data-i18n="nika_load">Load lokal</button>
     </div>
   </div>
 
@@ -132,13 +133,13 @@
     <!-- ============ SIDEBAR ============ -->
     <aside>
       <div class="panel">
-        <h2>Proyek</h2>
-        <div class="field"><label for="title">Judul / konsep</label><input id="title" placeholder="Judul lagu / konsep MV"></div>
+        <h2 data-i18n="nika_proj">Proyek</h2>
+        <div class="field"><label for="title" data-i18n="nika_title">Judul / konsep</label><input id="title" placeholder="Judul lagu / konsep MV"></div>
         <div class="field"><label for="bpm">BPM</label><input id="bpm" class="mono" type="number" min="40" max="240" step="1" value="120"></div>
         <div class="field"><label for="tsig">Time signature</label>
           <select id="tsig"><option value="4/4" selected>4/4</option><option value="3/4">3/4</option><option value="6/8">6/8</option></select>
         </div>
-        <div class="field"><label for="style">Style musik (global)</label><textarea id="style" rows="3" placeholder="synthpop, 120 BPM, female vocal, clean mix"></textarea></div>
+        <div class="field"><label for="style" data-i18n="nika_style">Style musik (global)</label><textarea id="style" rows="3" placeholder="synthpop, 120 BPM, female vocal, clean mix"></textarea></div>
         <div class="btnrow">
           <button class="b ghost" type="button" data-style-preset="synthpop, female vocal, clean mix, emotional but bright">Synthpop</button>
           <button class="b ghost" type="button" data-style-preset="cinematic ballad, atmospheric piano and strings, restrained slow build, warm not dark">Ballad</button>
@@ -148,7 +149,7 @@
       </div>
 
       <div class="panel">
-        <h2>Default baris baru</h2>
+        <h2 data-i18n="nika_new">Default baris baru</h2>
         <div class="field"><label for="defaultDur">Durasi default (detik)</label>
           <select id="defaultDur"><option value="4" selected>4</option><option value="6">6</option><option value="8">8</option><option value="2">2</option><option value="10">10</option></select>
         </div>
@@ -166,7 +167,7 @@
 
       <!-- ===== PROMPT MUSIK STANDAR ===== -->
       <div class="panel">
-        <h2>Prompt musik standar</h2>
+        <h2 data-i18n="nika_prompt">Prompt musik standar</h2>
         <p class="hint" style="margin:0 0 10px">Format blok: <code>[TIME]</code> lalu tag <code>[COMBO]</code> satu per kurung, lalu baris lirik. Pilih tag di bawah — hasilnya ditulis ke kolom <strong>Prompt musik</strong>.</p>
 
         <div class="field"><label>Instrumen</label>
@@ -234,7 +235,7 @@
 
       <!-- ===== QUICK FILL ===== -->
       <div class="panel">
-        <h2>Quick fill</h2>
+        <h2 data-i18n="nika_quick">Quick fill</h2>
         <div class="field"><label for="pasteLyrics">Paste</label>
           <textarea id="pasteLyrics" rows="8" placeholder="[00:00–00:06]&#10;[PIANO][SOFT][MELANCHOLIC]&#10;line one&#10;&#10;[Verse 1]&#10;line two"></textarea>
         </div>
@@ -248,8 +249,8 @@
       </div>
 
       <div class="panel">
-        <h2>Privasi</h2>
-        <p class="hint">Semua berjalan di browser. Tidak ada unggahan file, tidak ada panggilan jaringan dari tool ini. Isi disimpan di localStorage browser bila kamu menekan <em>Save lokal</em>.</p>
+        <h2 data-i18n="nika_priv">Privasi</h2>
+        <p class="hint" data-i18n="nika_priv_p">Semua berjalan di browser. Tidak ada unggahan file, tidak ada panggilan jaringan dari tool ini. Isi disimpan di localStorage browser bila kamu menekan Save lokal.</p>
       </div>
     </aside>
 
@@ -337,5 +338,6 @@ Instrumental break.</div>
 </main>
 
 <footer><div class="wrap">VAH Official · Nika · composer · standard music prompt · nothing leaves this browser</div></footer>
+<script src="../assets/i18n.js"></script>
 <script src="composer.js"></script>
 </body></html>

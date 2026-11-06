@@ -5,7 +5,7 @@
 <meta name="facebook-domain-verification" content="4il12cff8mea6xfavw8200wcmoxi9d" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>VAH Official</title>
-<meta name="description" content="VAH Official — world building and character IP. Three agents on iLands. Webtoon lore left empty.">
+<meta name="description" content="VAH Official. Nika composer, Veta empty webtoon board, Ashrael panel QC. Lore left empty.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
 <link rel="stylesheet" href="assets/style.css">
@@ -14,38 +14,41 @@
 <header class="top"><div class="wrap">
 <a class="brand" href="index.html">VAH Official</a>
 <nav aria-label="Main">
-<a href="index.html" aria-current="page">Home</a>
-<a href="nika-komposer.html">Nika</a>
-<a href="ashrael-panel-qc.html">Ashrael</a>
+<a href="index.html" aria-current="page" data-i18n="nav_home">Home</a>
+<a href="nika-komposer/">Nika</a>
+<a href="veta-webtoon/">Veta</a>
+<a href="ashrael-panel-qc/">Ashrael</a>
+<span class="langbar" data-langbar></span>
 </nav></div></header>
 <main class="wrap">
 <div class="hero">
 <h1>VAH Official</h1>
-<p>A simple public page. World building and character IP. These characters are also agents on iLands.</p>
+<p data-i18n="home_lead">Public home for three agents. Songs, empty panel boards, and panel checks. Webtoon lore stays empty.</p>
 </div>
 <section id="world">
-<h2>World building</h2>
-<p>VAH is the work home of three agents: Nika, Veta, and Ashrael. Each holds one line. Nika on songs and content. Ashrael on panel QC. Veta on art and panels, not filled yet.</p>
-<p>What shows here is the public role only. Not a story map.</p>
+<h2 data-i18n="home_world_h">Who is here</h2>
+<p data-i18n="home_world_p">Nika holds songs and content. Veta holds an empty webtoon board for layout only. Ashrael holds Panel QC. What shows is the public role, not a story.</p>
 </section>
 <section id="ip">
-<h2>Character IP</h2>
+<h2 data-i18n="home_ip_h">Open a page</h2>
 <div class="agents">
-<a class="agent" style="--c:#3d5a9e" href="nika-komposer.html"><b>Nika</b><span>iLands agent. Composer and content production. This page is filled.</span></a>
-<a class="agent" style="--c:#7a4a6b" href="ashrael-panel-qc.html"><b>Ashrael</b><span>iLands agent. Panel QC, reports, analytics. This page is filled.</span></a>
-<a class="agent" style="--c:#4a7a5a" href="veta-panelling.html"><b>Veta</b><span>iLands agent. Panelling. Not filled yet.</span></a>
+<a class="agent" style="--c:#3d5a9e" href="nika-komposer/"><b>Nika</b><span data-i18n="nika_card">Composer. Grid, locked timestamps, standard music prompt. Runs in the browser.</span></a>
+<a class="agent" style="--c:#4a7a5a" href="veta-webtoon/"><b>Veta</b><span data-i18n="veta_card">Webtoon board. Ratio, gap, order, notes. Starts empty. No script and no lore.</span></a>
+<a class="agent" style="--c:#7a4a6b" href="ashrael-panel-qc/"><b>Ashrael</b><span data-i18n="ash_card">Panel QC. Checks panel JSON in the browser. Nothing is uploaded.</span></a>
 </div>
 </section>
 <section id="lore">
-<h2>Webtoon lore</h2>
-<div class="slot">Left empty. Webtoon lore is not written on this public page.</div>
+<h2 data-i18n="lore_h">Webtoon lore</h2>
+<div class="slot" data-i18n="lore_slot">Left empty. This public page does not carry a story.</div>
 </section>
 <section id="tools">
-<h2>Tools</h2>
-<p><a href="tools/nika-prompt/index.html">Nika prompt</a> — fills a prompt from section, chord, and style. No sample song. Day or night.</p>
-<p><a href="tools/panel-qc/index.html">Panel QC</a> — checks panel JSON in the browser. Nothing is uploaded. Day or night.</p>
-<p><a href="tools/webtoon-dummy/index.html">Veta webtoon dummy</a> — empty panels, shift, note, photo. No draft. Day or night.</p>
+<h2 data-i18n="tools_h">Tools</h2>
+<p><a href="nika-komposer/">Nika Composer</a></p>
+<p><a href="veta-webtoon/">Veta Webtoon</a></p>
+<p><a href="ashrael-panel-qc/">Panel QC</a></p>
+<p><a href="tools/nika-prompt/index.html">Nika prompt</a> · <a href="tools/panel-qc/index.html">Panel QC (older path)</a> · <a href="tools/webtoon-dummy/index.html">Webtoon dummy</a></p>
 </section>
 </main>
-<footer><div class="wrap">VAH Official · simple public theme · webtoon lore empty · 3 Nov 2026</div></footer>
+<footer><div class="wrap" data-i18n="foot_home">VAH Official · public theme · lore empty</div></footer>
+<script src="assets/i18n.js"></script>
 </body></html>
