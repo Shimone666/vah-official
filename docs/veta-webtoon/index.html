@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veta · Webtoon — Veta | VAH Official</title>
+<meta name="description" content="Veta, character IP and an iLands agent. Empty webtoon panel board for layout settings only. No story, no draft, nothing uploaded.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  :root{--tool-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+  body.veta{--accent:#4a7a5a;--accent-soft:#e3efe6}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body.veta{--accent:#8cc29b;--accent-soft:#1c2a21}}
+  :root[data-theme="dark"] body.veta{--accent:#8cc29b;--accent-soft:#1c2a21}
+
+  .tool-wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+  .toolnav{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .toolnav a{color:var(--muted);text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+  .toolnav a:hover{color:var(--ink)}
+  .toolnav a[aria-current="page"]{color:var(--ink);border-color:var(--accent)}
+  .modebtn{font:inherit;font-size:.78rem;padding:.3rem .7rem;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+  .modebtn:hover{color:var(--ink);border-color:var(--accent)}
+
+  .layout{display:grid;grid-template-columns:290px 1fr;gap:20px;align-items:start;padding:22px 0 44px}
+  @media (max-width:900px){.layout{grid-template-columns:1fr}}
+
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .panel + .panel{margin-top:14px}
+  .panel h2{font:600 12px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;border:0;padding:0}
+  .field{margin-bottom:11px}
+  .field label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+  select,input[type="number"],input[type="text"]{width:100%;font:inherit;font-size:.86rem;padding:.42rem .55rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+  input[type="checkbox"]{width:auto}
+  .check{display:flex;gap:.45rem;align-items:center;font-size:.82rem;color:var(--muted);margin-bottom:7px}
+  .btnrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  button.b{font:inherit;font-size:.78rem;padding:.4rem .7rem;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+  button.b:hover{border-color:var(--accent)}
+  button.b.solid{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.b.ghost{background:transparent;color:var(--muted)}
+  .hint{font-size:.74rem;color:var(--muted);line-height:1.55;margin:.4rem 0 0}
+
+  .empty{border:1px dashed var(--line);border-radius:12px;padding:52px 24px;text-align:center;color:var(--muted);background:var(--surface)}
+  .empty strong{display:block;font:500 20px/1.3 var(--serif);color:var(--ink);margin-bottom:6px}
+
+  .board{display:grid;gap:var(--gutter,14px)}
+  .board.c1{grid-template-columns:minmax(0,420px)}
+  .board.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .board.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (max-width:760px){.board.c2,.board.c3{grid-template-columns:1fr}}
+
+  .pcard{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:12px;padding:.55rem;display:flex;flex-direction:column;gap:.4rem}
+  .slot{position:relative;border:1px dashed var(--accent);border-radius:8px;display:grid;place-items:center;overflow:hidden;background:var(--bg);color:var(--muted);font-size:.76rem;text-align:center;aspect-ratio:var(--ar,9/16);max-height:var(--maxh,340px)}
+  .slot img{width:100%;height:100%;object-fit:contain}
+  .slot .idx{position:absolute;top:6px;left:6px;font-family:var(--tool-mono);font-size:.68rem;background:var(--surface);border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--muted)}
+  .pcard .prow{display:flex;gap:.3rem;flex-wrap:wrap;align-items:center}
+  .pcard input[type="text"]{flex:1;min-width:7rem;font-size:.82rem}
+  .pcard .acts{display:flex;gap:.2rem;flex-wrap:wrap}
+  .pcard .acts button,.pcard .acts .filebtn{font:inherit;font-size:.7rem;padding:.18rem .38rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+  .pcard .acts button:hover,.pcard .acts .filebtn:hover{border-color:var(--accent);color:var(--ink)}
+  .hide-notes .note-row{display:none}
+
+  .sheet{margin-top:16px}
+  .sheet textarea{min-height:150px;font-family:var(--tool-mono);font-size:.72rem;width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px;resize:vertical}
+</style>
+</head>
+<body class="veta">
+<header class="top"><div class="wrap">
+<a class="brand" href="../index.html">VAH Official</a>
+<nav aria-label="Main">
+<a href="../index.html">Home</a>
+<a href="../nika-komposer.html">Nika</a>
+<a href="../ashrael-panel-qc.html">Ashrael</a>
+</nav></div></header>
+
+<div class="tool-wrap">
+  <div class="toolnav">
+    <strong style="font-size:.82rem">Tools</strong>
+    <a href="../nika-komposer/">Nika Composer</a>
+    <a href="./index.html" aria-current="page">Veta Webtoon</a>
+    <a href="../ashrael-panel-qc/">Panel QC</a>
+    <span style="flex:1"></span>
+    <button class="modebtn" type="button" id="modeBtn">Day / Night</button>
+  </div>
+</div>
+
+<main class="tool-wrap">
+  <div style="padding:26px 0 0">
+    <h1 style="font:500 32px/1.15 var(--serif);margin:0 0 6px">Veta · Webtoon</h1>
+    <p class="muted" style="margin:0 0 4px;max-width:60ch">Panel board untuk menyiapkan <strong>setting</strong> panel webtoon — rasio, jarak, ukuran, urutan, dan nomor.</p>
+    <p class="muted" style="margin:0;font-size:.86rem">Papan ini sengaja <strong>kosong</strong>. Tidak ada naskah, tidak ada draft cerita, tidak ada lore. Tambah panel kosong bila perlu.</p>
+  </div>
+
+  <div class="layout">
+    <aside>
+      <div class="panel">
+        <h2>Setting panel</h2>
+        <div class="field">
+          <label for="ar">Rasio panel</label>
+          <select id="ar">
+            <option value="9/16" selected>9:16 — webtoon</option>
+            <option value="3/4">3:4</option>
+            <option value="1/1">1:1</option>
+            <option value="4/5">4:5</option>
+            <option value="16/9">16:9</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="maxh">Tinggi maksimum slot (px)</label>
+          <input id="maxh" type="number" min="120" max="900" step="10" value="340">
+        </div>
+        <div class="field">
+          <label for="gutter">Jarak antar panel (px)</label>
+          <input id="gutter" type="number" min="0" max="60" step="2" value="14">
+        </div>
+        <div class="field">
+          <label for="cols">Kolom</label>
+          <select id="cols">
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Pelapan</label>
+          <label class="check"><input type="checkbox" id="notes" checked> Tampilkan kolom catatan</label>
+          <label class="check"><input type="checkbox" id="numbers" checked> Tampilkan nomor panel</label>
+          <label class="check"><input type="checkbox" id="ratioHint"> Tampilkan rasio pada slot</label>
+        </div>
+        <div class="btnrow">
+          <button class="b solid" type="button" id="add">+ Panel kosong</button>
+          <button class="b ghost" type="button" id="clearNotes">Hapus catatan</button>
+          <button class="b ghost" type="button" id="reset">Kosongkan papan</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Privasi</h2>
+        <p class="hint">Semua berjalan di browser. Foto yang dilampirkan hanya dibaca lokal lewat object URL — <strong>tidak pernah diunggah</strong>. Setting disimpan di localStorage browser. Tidak ada lore webtoon di halaman ini.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Yang bisa dan tidak bisa</h2>
+        <p class="hint"><strong>Bisa:</strong> tambah / hapus panel, ubah urutan, atur rasio, jarak, ukuran, kolom, nomor, catatan.<br><strong>Tidak ada di sini:</strong> naskah, dialog, karakter, lore, draft chapter, gambar contoh.</p>
+      </div>
+    </aside>
+
+    <section>
+      <div id="emptyState" class="empty">
+        <strong>Papan masih kosong</strong>
+        <span>Belum ada panel. Tekan <em>Panel kosong</em> untuk mulai menyiapkan setting.</span>
+      </div>
+      <div class="board c2" id="board"></div>
+
+      <div class="panel sheet">
+        <h2>Lembar setting panel</h2>
+        <p class="hint" style="margin:0 0 8px">Daftar nomor, rasio, dan setting aktif. Tidak berisi isi cerita.</p>
+        <textarea id="sheet" readonly spellcheck="false"></textarea>
+        <div class="btnrow">
+          <button class="b" type="button" id="copySheet">Copy</button>
+          <button class="b" type="button" id="dlSheet">Download</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer><div class="wrap">VAH Official · Veta · webtoon panel settings · board starts empty · nothing leaves this browser</div></footer>
+<script>
+(function () {
+  "use strict";
+
+  const LS_KEY = "veta-webtoon-panelboard";
+  const board = document.getElementById("board");
+  const emptyState = document.getElementById("emptyState");
+  const els = {
+    ar: document.getElementById("ar"),
+    maxh: document.getElementById("maxh"),
+    gutter: document.getElementById("gutter"),
+    cols: document.getElementById("cols"),
+    notes: document.getElementById("notes"),
+    numbers: document.getElementById("numbers"),
+    ratioHint: document.getElementById("ratioHint"),
+    sheet: document.getElementById("sheet"),
+  };
+
+  let panels = [];   /* { note, url } — url = object URL lokal, tidak pernah diunggah */
+
+  function blank() { return { note: "", url: "" }; }
+
+  function readSettings() {
+    return {
+      ar: els.ar.value,
+      maxh: els.maxh.value,
+      gutter: els.gutter.value,
+      cols: els.cols.value,
+      notes: els.notes.checked,
+      numbers: els.numbers.checked,
+      ratioHint: els.ratioHint.checked,
+    };
+  }
+
+  function saveLocal() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({
+        settings: readSettings(),
+        notes: panels.map(function (p) { return p.note; })
+      }));
+    } catch (e) {}
+  }
+
+  function applySettings() {
+    const s = readSettings();
+    board.className = "board c" + s.cols;
+    board.style.setProperty("--gutter", s.gutter + "px");
+    board.style.setProperty("--ar", s.ar);
+    board.style.setProperty("--maxh", s.maxh + "px");
+    board.classList.toggle("hide-notes", !s.notes);
+    saveLocal();
+  }
+
+  function makeBtn(label, fn) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.addEventListener("click", fn);
+    return b;
+  }
+
+  function paint() {
+    board.innerHTML = "";
+    emptyState.style.display = panels.length ? "none" : "block";
+
+    panels.forEach(function (p, i) {
+      const card = document.createElement("article");
+      card.className = "pcard";
+
+      const slot = document.createElement("div");
+      slot.className = "slot";
+      if (els.numbers.checked) {
+        const idx = document.createElement("span");
+        idx.className = "idx";
+        idx.textContent = String(i + 1).padStart(2, "0");
+        slot.appendChild(idx);
+      }
+      if (p.url) {
+        const img = document.createElement("img");
+        img.alt = "panel " + (i + 1);
+        img.src = p.url;
+        slot.appendChild(img);
+      } else {
+        slot.textContent = els.ratioHint.checked ? ("Panel " + (i + 1) + " · " + els.ar.value) : ("Panel " + (i + 1) + " · kosong");
+      }
+
+      const noteRow = document.createElement("div");
+      noteRow.className = "note-row";
+      const note = document.createElement("input");
+      note.type = "text";
+      note.placeholder = "catatan (opsional)";
+      note.value = p.note;
+      note.addEventListener("input", function () { p.note = note.value; saveLocal(); buildSheet(); });
+      noteRow.appendChild(note);
+
+      const row = document.createElement("div");
+      row.className = "prow";
+
+      const file = document.createElement("input");
+      file.type = "file";
+      file.accept = "image/*";
+      file.className = "filebtn";
+      file.addEventListener("change", function () {
+        const f = file.files && file.files[0];
+        if (!f) return;
+        if (p.url) URL.revokeObjectURL(p.url);
+        p.url = URL.createObjectURL(f);
+        paint();
+      });
+
+      row.appendChild(file,
+        makeBtn("↑", function () { move(i, -1); }),
+        makeBtn("↓", function () { move(i, 1); }),
+        makeBtn("Hapus foto", function () { if (p.url) { URL.revokeObjectURL(p.url); p.url = ""; } paint(); }),
+        makeBtn("Hapus", function () { if (p.url) URL.revokeObjectURL(p.url); panels.splice(i, 1); paint(); })
+      );
+
+      card.appendChild(slot);
+      card.appendChild(noteRow);
+      card.appendChild(row);
+      board.appendChild(card);
+    });
+
+    buildSheet();
+  }
+
+  function move(i, d) {
+    const j = i + d;
+    if (j < 0 || j >= panels.length) return;
+    const t = panels[i]; panels[i] = panels[j]; panels[j] = t;
+    paint();
+  }
+
+  function buildSheet() {
+    const s = readSettings();
+    const lines = [
+      "Panel layout sheet — VAH Official · Veta",
+      "Rasio     : " + s.ar,
+      "Tinggi    : " + s.maxh + " px max",
+      "Jarak     : " + s.gutter + " px",
+      "Kolom     : " + s.cols,
+      "Nomor     : " + (s.numbers ? "tampil" : "off"),
+      "Catatan   : " + (s.notes ? "tampil" : "off"),
+      "",
+      "Panel | Rasio | Catatan",
+      "----- + ----- + -------"
+    ];
+    panels.forEach(function (p, i) {
+      lines.push(
+        String(i + 1).padStart(5, " ") + " | " + s.ar.padEnd(5, " ") + " | " + (p.note || "")
+      );
+    });
+    if (!panels.length) lines.push("  (board kosong)");
+    els.sheet.value = lines.join("\n");
+  }
+
+  /* ---- kontrol ---- */
+  document.getElementById("add").addEventListener("click", function () { panels.push(blank()); paint(); });
+  document.getElementById("clearNotes").addEventListener("click", function () {
+    panels.forEach(function (p) { p.note = ""; }); paint();
+  });
+  document.getElementById("reset").addEventListener("click", function () {
+    panels.forEach(function (p) { if (p.url) URL.revokeObjectURL(p.url); });
+    panels = []; paint();
+  });
+  ["ar", "maxh", "gutter", "cols"].forEach(function (id) {
+    els[id].addEventListener("change", function () { applySettings(); paint(); });
+  });
+  ["notes", "numbers", "ratioHint"].forEach(function (id) {
+    els[id].addEventListener("change", function () { applySettings(); paint(); });
+  });
+
+  document.getElementById("copySheet").addEventListener("click", function () {
+    navigator.clipboard.writeText(els.sheet.value).then(
+      function () {},
+      function () { els.sheet.select(); document.execCommand("copy"); }
+    );
+  });
+  document.getElementById("dlSheet").addEventListener("click", function () {
+    const blob = new Blob([els.sheet.value], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "veta-panel-layout.txt";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  /* ---- tema ---- */
+  const modeBtn = document.getElementById("modeBtn");
+  function setTheme(mode) {
+    document.documentElement.dataset.theme = mode;
+    try { localStorage.setItem("veta-webtoon-theme", mode); } catch (e) {}
+  }
+  modeBtn.addEventListener("click", function () {
+    setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+  });
+  let savedTheme = null;
+  try { savedTheme = localStorage.getItem("veta-webtoon-theme"); } catch (e) {}
+  if (savedTheme) setTheme(savedTheme);
+  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  else setTheme("light");
+
+  /* ---- pulihkan setting (catatan ikut; foto tidak dipulihkan) ---- */
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (data && data.settings) {
+        const s = data.settings;
+        if (s.ar) els.ar.value = s.ar;
+        if (s.maxh) els.maxh.value = s.maxh;
+        if (s.gutter) els.gutter.value = s.gutter;
+        if (s.cols) els.cols.value = s.cols;
+        els.notes.checked = s.notes !== false;
+        els.numbers.checked = s.numbers !== false;
+        els.ratioHint.checked = !!s.ratioHint;
+      }
+      if (data && Array.isArray(data.notes)) {
+        data.notes.forEach(function (n) { panels.push({ note: n || "", url: "" }); });
+      }
+    }
+  } catch (e) {}
+
+  applySettings();
+  paint();
+})();
+</script>
+</body></html>

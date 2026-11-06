@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nika Composer — Nika | VAH Official</title>
+<meta name="description" content="Nika, character IP and an iLands agent. Grid beat with locked timestamp and standard music prompt format. Runs in the browser.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  /* --- tool chrome, inherits VAH Official tokens --- */
+  :root{
+    --tool-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+    --soft:var(--accent-soft);
+  }
+  html[data-theme="dark"]{--soft:var(--accent-soft)}
+  body.nika{--accent:#3d5a9e;--accent-soft:#e4eaf6}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body.nika{--accent:#8fa8e0;--accent-soft:#1d2536}}
+  :root[data-theme="dark"] body.nika{--accent:#8fa8e0;--accent-soft:#1d2536}
+
+  .tool-wrap{max-width:1320px;margin:0 auto;padding:0 24px}
+  .toolbar-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 0}
+  .toolnav{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .toolnav a{color:var(--muted);text-decoration:none;padding:2px 0;border-bottom:2px solid transparent}
+  .toolnav a:hover{color:var(--ink)}
+  .toolnav a[aria-current="page"]{color:var(--ink);border-color:var(--accent)}
+
+  .modebtn{font:inherit;font-size:.78rem;padding:.3rem .7rem;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+  .modebtn:hover{color:var(--ink);border-color:var(--accent)}
+
+  .grid-layout{display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start;padding:20px 0 8px}
+  @media (max-width:980px){.grid-layout{grid-template-columns:1fr}}
+
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .panel + .panel{margin-top:14px}
+  .panel h2{font:600 12px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;border:0;padding:0}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:4px}
+  input,select,textarea{width:100%;font:inherit;font-size:.86rem;padding:.42rem .55rem;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+  textarea{resize:vertical}
+  .mono{font-family:var(--tool-mono);font-size:.82rem}
+  .hint{font-size:.74rem;color:var(--muted);line-height:1.5;margin:.4rem 0 0}
+  .hint code{font-family:var(--tool-mono);font-size:.72rem;background:var(--soft);padding:1px 4px;border-radius:4px}
+
+  .btnrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  button.b{font:inherit;font-size:.78rem;padding:.4rem .7rem;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+  button.b:hover{border-color:var(--accent)}
+  button.b.solid{background:var(--accent);border-color:var(--accent);color:#fff}
+  button.b.ghost{background:transparent;color:var(--muted)}
+
+  .tagset{display:flex;flex-wrap:wrap;gap:5px}
+  .tagset label{display:inline-flex;align-items:center;gap:5px;font-size:.74rem;color:var(--ink2,var(--muted));background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:.18rem .55rem;cursor:pointer;text-transform:none;letter-spacing:0;margin:0}
+  .tagset input{width:auto;margin:0}
+  .tagset label:hover{border-color:var(--accent)}
+
+  .workhead{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;font-size:.82rem;color:var(--muted);padding:0 0 10px}
+  .workhead strong{color:var(--ink);font-family:var(--tool-mono)}
+  .lock{color:var(--accent);font-size:.72rem}
+
+  .scroller{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+  .scroller table{width:100%;border-collapse:collapse;font-size:.8rem;min-width:1120px}
+  th{text-align:left;padding:.5rem .45rem;border-bottom:1px solid var(--line);color:var(--muted);font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;background:var(--bg)}
+  td{padding:.28rem .35rem;border-bottom:1px solid var(--line);vertical-align:middle}
+  tbody tr:hover td{background:var(--soft)}
+  tr.section-row td{background:var(--soft);border-top:2px solid var(--accent)}
+  tr.instr-row td{background:var(--bg)}
+  td input,td select{padding:.3rem .38rem;font-size:.78rem}
+  td input.num{width:62px;font-family:var(--tool-mono);text-align:right}
+  td .lyric{min-width:140px}
+  td .prompt{min-width:150px}
+  td .ts{font-family:var(--tool-mono);color:var(--accent);font-size:.78rem;white-space:nowrap}
+  td .muted,span.muted{color:var(--muted)}
+  .section-bar{display:flex;align-items:center;gap:.55rem}
+  .tag{font-size:.62rem;letter-spacing:.06em;color:var(--accent);text-transform:uppercase;white-space:nowrap}
+  .section-name{flex:1;font-family:var(--tool-mono);font-size:.92rem;font-weight:600;color:var(--ink);border-color:var(--accent)}
+  .kind-badge{font-size:.66rem;padding:.12rem .38rem;border-radius:4px;background:var(--bg);color:var(--muted);white-space:nowrap}
+  .kind-badge.instr{color:var(--accent);border:1px solid var(--accent)}
+  .acts{display:flex;flex-wrap:wrap;gap:.15rem}
+  .acts button{font:inherit;font-size:.68rem;padding:.16rem .3rem;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+  .acts button:hover{border-color:var(--accent);color:var(--ink)}
+
+  .exports{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0 40px}
+  @media (max-width:820px){.exports{grid-template-columns:1fr}}
+  .export-box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .export-box h3{margin:0 0 8px;font-size:.8rem;font-weight:600}
+  .export-box h3 span{font-weight:400;color:var(--muted);font-size:.72rem}
+  .export-box textarea{min-height:170px;font-family:var(--tool-mono);font-size:.72rem}
+  .export-box .btnrow button{font-size:.72rem;padding:.28rem .6rem}
+  .std{font-family:var(--tool-mono);font-size:.72rem;white-space:pre;overflow-x:auto;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;color:var(--ink)}
+</style>
+</head>
+<body class="nika">
+<header class="top"><div class="wrap">
+<a class="brand" href="../index.html">VAH Official</a>
+<nav aria-label="Main">
+<a href="../index.html">Home</a>
+<a href="../nika-komposer.html">Nika</a>
+<a href="../ashrael-panel-qc.html">Ashrael</a>
+</nav></div></header>
+
+<div class="tool-wrap">
+  <div class="toolnav">
+    <strong style="font-size:.82rem">Tools</strong>
+    <a href="./index.html" aria-current="page">Nika Composer</a>
+    <a href="../veta-webtoon/">Veta Webtoon</a>
+    <a href="../ashrael-panel-qc/">Panel QC</a>
+    <span style="flex:1"></span>
+    <button class="modebtn" type="button" id="modeBtn">Day / Night</button>
+  </div>
+</div>
+
+<main class="tool-wrap">
+  <div class="toolbar-top">
+    <div>
+      <h1 style="font:500 30px/1.15 var(--serif);margin:0 0 4px">Nika Composer</h1>
+      <p class="muted" style="margin:0;font-size:.9rem">Grid beat · timestamp terkunci · prompt musik format standar</p>
+    </div>
+    <div class="btnrow">
+      <button class="b" type="button" onclick="addLine()">+ Baris</button>
+      <button class="b" type="button" onclick="addSection()">+ Sub judul</button>
+      <button class="b" type="button" onclick="addInstrumental()">+ Instrumental</button>
+      <button class="b" type="button" onclick="ensureInstrGaps()">Isi jeda instrumental</button>
+      <button class="b" type="button" onclick="recalcAll()">Recalc timestamp</button>
+      <button class="b solid" type="button" onclick="exportAll()">Refresh export</button>
+      <button class="b ghost" type="button" onclick="saveLocal()">Save lokal</button>
+      <button class="b ghost" type="button" onclick="loadLocal()">Load lokal</button>
+    </div>
+  </div>
+
+  <div class="grid-layout">
+    <!-- ============ SIDEBAR ============ -->
+    <aside>
+      <div class="panel">
+        <h2>Proyek</h2>
+        <div class="field"><label for="title">Judul / konsep</label><input id="title" placeholder="Judul lagu / konsep MV"></div>
+        <div class="field"><label for="bpm">BPM</label><input id="bpm" class="mono" type="number" min="40" max="240" step="1" value="120"></div>
+        <div class="field"><label for="tsig">Time signature</label>
+          <select id="tsig"><option value="4/4" selected>4/4</option><option value="3/4">3/4</option><option value="6/8">6/8</option></select>
+        </div>
+        <div class="field"><label for="style">Style musik (global)</label><textarea id="style" rows="3" placeholder="synthpop, 120 BPM, female vocal, clean mix"></textarea></div>
+        <div class="btnrow">
+          <button class="b ghost" type="button" data-style-preset="synthpop, female vocal, clean mix, emotional but bright">Synthpop</button>
+          <button class="b ghost" type="button" data-style-preset="cinematic ballad, atmospheric piano and strings, restrained slow build, warm not dark">Ballad</button>
+          <button class="b ghost" type="button" data-style-preset="lo-fi, dusty drums, warm keys, relaxed">Lo-fi</button>
+          <button class="b ghost" type="button" data-style-preset="acoustic, fingerpicked guitar, intimate close-mic, natural room">Akustik</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Default baris baru</h2>
+        <div class="field"><label for="defaultDur">Durasi default (detik)</label>
+          <select id="defaultDur"><option value="4" selected>4</option><option value="6">6</option><option value="8">8</option><option value="2">2</option><option value="10">10</option></select>
+        </div>
+        <div class="field"><label for="defaultSection">Nama sub judul default</label><input id="defaultSection" class="mono" placeholder="Verse 1 / Chorus…" value="Verse 1"></div>
+        <div class="field"><label for="defaultRole">Role default</label>
+          <select id="defaultRole">
+            <option value="sing" selected>sing</option><option value="build">build</option><option value="hold">hold</option>
+            <option value="drop">drop</option><option value="breath">breath</option><option value="instrumen">instrumen</option>
+          </select>
+        </div>
+        <div class="field"><label for="instrDur">Durasi instrumental (detik) — tombol Isi jeda</label>
+          <select id="instrDur"><option value="4" selected>4</option><option value="6">6</option><option value="8">8</option><option value="2">2</option></select>
+        </div>
+      </div>
+
+      <!-- ===== PROMPT MUSIK STANDAR ===== -->
+      <div class="panel">
+        <h2>Prompt musik standar</h2>
+        <p class="hint" style="margin:0 0 10px">Format blok: <code>[TIME]</code> lalu tag <code>[COMBO]</code> satu per kurung, lalu baris lirik. Pilih tag di bawah — hasilnya ditulis ke kolom <strong>Prompt musik</strong>.</p>
+
+        <div class="field"><label>Instrumen</label>
+          <div class="tagset" id="tagInst">
+            <label><input type="checkbox" value="PIANO">PIANO</label>
+            <label><input type="checkbox" value="STRINGS">STRINGS</label>
+            <label><input type="checkbox" value="GUITAR">GUITAR</label>
+            <label><input type="checkbox" value="BASS">BASS</label>
+            <label><input type="checkbox" value="DRUMS">DRUMS</label>
+            <label><input type="checkbox" value="SYNTH">SYNTH</label>
+            <label><input type="checkbox" value="PAD">PAD</label>
+            <label><input type="checkbox" value="ORGAN">ORGAN</label>
+            <label><input type="checkbox" value="FLUTE">FLUTE</label>
+            <label><input type="checkbox" value="VIBRAPHONE">VIBRAPHONE</label>
+          </div>
+        </div>
+
+        <div class="field"><label>Tekstur</label>
+          <div class="tagset" id="tagTexture">
+            <label><input type="checkbox" value="SOFT">SOFT</label>
+            <label><input type="checkbox" value="AIRY">AIRY</label>
+            <label><input type="checkbox" value="CLEAN">CLEAN</label>
+            <label><input type="checkbox" value="WIDE">WIDE</label>
+            <label><input type="checkbox" value="DRY">DRY</label>
+            <label><input type="checkbox" value="LOFI">LOFI</label>
+          </div>
+        </div>
+
+        <div class="field"><label>Mood</label>
+          <div class="tagset" id="tagMood">
+            <label><input type="checkbox" value="MELANCHOLIC">MELANCHOLIC</label>
+            <label><input type="checkbox" value="BRIGHT">BRIGHT</label>
+            <label><input type="checkbox" value="NOSTALGIC">NOSTALGIC</label>
+            <label><input type="checkbox" value="CALM">CALM</label>
+            <label><input type="checkbox" value="TENSE">TENSE</label>
+            <label><input type="checkbox" value="HOPEFUL">HOPEFUL</label>
+            <label><input type="checkbox" value="DARK">DARK</label>
+            <label><input type="checkbox" value="DRIVING">DRIVING</label>
+          </div>
+        </div>
+
+        <div class="field"><label>Dinamika</label>
+          <div class="tagset" id="tagDyn">
+            <label><input type="checkbox" value="INTIMATE">INTIMATE</label>
+            <label><input type="checkbox" value="BUILD">BUILD</label>
+            <label><input type="checkbox" value="LIFT">LIFT</label>
+            <label><input type="checkbox" value="DROP">DROP</label>
+            <label><input type="checkbox" value="HOLD">HOLD</label>
+            <label><input type="checkbox" value="BREATH">BREATH</label>
+          </div>
+        </div>
+
+        <div class="field" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><label for="tagKey">Key (opsional)</label><input id="tagKey" class="mono" placeholder="KEY=Am"></div>
+          <div><label for="tagTempo">Tempo (opsional)</label><input id="tagTempo" class="mono" placeholder="TEMPO=82"></div>
+        </div>
+
+        <div class="field"><label for="targetRow">Terapkan ke baris</label><select id="targetRow"></select></div>
+        <div class="btnrow">
+          <button class="b solid" type="button" onclick="applyStandardPrompt()">Terapkan ke baris</button>
+          <button class="b" type="button" onclick="copyStandardTags()">Copy tag</button>
+          <button class="b ghost" type="button" onclick="resetStandardTags()">Reset</button>
+        </div>
+      </div>
+
+      <!-- ===== QUICK FILL ===== -->
+      <div class="panel">
+        <h2>Quick fill</h2>
+        <div class="field"><label for="pasteLyrics">Paste</label>
+          <textarea id="pasteLyrics" rows="8" placeholder="[00:00–00:06]&#10;[PIANO][SOFT][MELANCHOLIC]&#10;line one&#10;&#10;[Verse 1]&#10;line two"></textarea>
+        </div>
+        <div class="btnrow">
+          <button class="b" type="button" onclick="importLyrics(false)">Tambah dari paste</button>
+          <button class="b solid" type="button" onclick="importLyrics(true)">Reset dari paste</button>
+          <button class="b ghost" type="button" onclick="pushFormulaToPaste()">Export → paste</button>
+          <button class="b ghost" type="button" onclick="clearPasteText()">Hapus paste</button>
+        </div>
+        <p class="hint">Dua format diterima: blok standar <code>[00:00–00:06]</code> + tag <code>[PIANO][SOFT]</code> + lirik, dan baris satu <code>[00:00.00-00:04.00][Am][soft] lirik</code>. Sub judul pakai <code>[nama]</code>.</p>
+      </div>
+
+      <div class="panel">
+        <h2>Privasi</h2>
+        <p class="hint">Semua berjalan di browser. Tidak ada unggahan file, tidak ada panggilan jaringan dari tool ini. Isi disimpan di localStorage browser bila kamu menekan <em>Save lokal</em>.</p>
+      </div>
+    </aside>
+
+    <!-- ============ WORKSPACE ============ -->
+    <section>
+      <div class="workhead">
+        <span>Total: <strong id="statDuration">00:00.00</strong></span>
+        <span>Baris: <strong id="statLines">0</strong></span>
+        <span>BPM: <strong id="statBpm">120</strong></span>
+        <span class="lock">● lock 00:00.00</span>
+      </div>
+
+      <div class="scroller">
+        <table>
+          <thead><tr>
+            <th>#</th><th>Start</th><th>End</th><th>Dur</th><th>Jenis / nama</th><th>Role</th>
+            <th>Chord</th><th>Lyric</th><th>Prompt musik</th><th>Lipsync</th><th>Aksi</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="exports">
+        <div class="export-box">
+          <h3>Lirik bersih <span>[sub judul] + lirik</span></h3>
+          <textarea id="outLyrics" class="mono" readonly></textarea>
+          <div class="btnrow">
+            <button class="b" type="button" onclick="copyText('outLyrics')">Copy</button>
+            <button class="b" type="button" onclick="downloadText('nika-lirik.txt', document.getElementById('outLyrics').value)">Download</button>
+          </div>
+        </div>
+        <div class="export-box">
+          <h3>Blok standar <span>[TIME] + [COMBO] + lirik</span></h3>
+          <textarea id="outStd" class="mono" readonly></textarea>
+          <div class="btnrow">
+            <button class="b" type="button" onclick="copyText('outStd')">Copy</button>
+            <button class="b" type="button" onclick="downloadText('nika-blok-standard.txt', document.getElementById('outStd').value)">Download</button>
+          </div>
+        </div>
+        <div class="export-box">
+          <h3>Suno Lyrics <span>section + timestamp + instrumental</span></h3>
+          <textarea id="outSuno" class="mono" readonly></textarea>
+          <div class="btnrow"><button class="b" type="button" onclick="copyText('outSuno')">Copy</button></div>
+        </div>
+        <div class="export-box">
+          <h3>Style musik</h3>
+          <textarea id="outStyle" class="mono" readonly></textarea>
+          <div class="btnrow"><button class="b" type="button" onclick="copyText('outStyle')">Copy</button></div>
+        </div>
+        <div class="export-box">
+          <h3>Timeline CSV</h3>
+          <textarea id="outCsv" class="mono" readonly></textarea>
+          <div class="btnrow">
+            <button class="b" type="button" onclick="copyText('outCsv')">Copy</button>
+            <button class="b" type="button" onclick="downloadText('nika-timeline.csv', document.getElementById('outCsv').value)">Download</button>
+          </div>
+        </div>
+        <div class="export-box">
+          <h3>SRT</h3>
+          <textarea id="outSrt" class="mono" readonly></textarea>
+          <div class="btnrow">
+            <button class="b" type="button" onclick="copyText('outSrt')">Copy</button>
+            <button class="b" type="button" onclick="downloadText('nika-lyrics.srt', document.getElementById('outSrt').value)">Download</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-bottom:40px">
+        <h2>Format standar</h2>
+        <div class="std">[00:00–00:06]
+[PIANO][SOFT][MELANCHOLIC]
+Lyric line...
+
+[00:06–00:14]
+[TEMPO=82][KEY=Am][PIANO+STRINGS][AIRY][INTIMATE]
+Lyric line...
+
+[00:14–00:20]
+[INSTRUMENTAL][TRANSITION]
+Instrumental break.</div>
+        <p class="hint">Tag ditulis satu per kurung siku, urutan bebas: instrumen, tekstur, mood, dinamika. Tag bernilai memakai <code>KEY=</code> dan <code>TEMPO=</code>. Chord ditulis sebagai tag terpisah bila diperlukan.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer><div class="wrap">VAH Official · Nika · composer · standard music prompt · nothing leaves this browser</div></footer>
+<script src="composer.js"></script>
+</body></html>
