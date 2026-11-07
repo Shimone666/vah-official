@@ -1,153 +1,312 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
+<meta charset="utf-8">
 <meta name="facebook-domain-verification" content="4il12cff8mea6xfavw8200wcmoxi9d" />
-<title>VAH — Worldbuilding Archive</title>
-<meta name="description" content="VAH worldbuilding archive — lore, characters, and the world behind the VAH server.">
-<meta property="og:title" content="VAH — Worldbuilding Archive">
-<meta property="og:description" content="Lore, characters, and the world behind the VAH server.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VAH Official — public concept record</title>
+<meta name="description" content="VAH Official. A public concept record of a world set in 2056 and the three agents who work inside it. Concept level only: no names, no identities, no plot.">
+<meta property="og:title" content="VAH Official">
+<meta property="og:description" content="A public concept record of a world set in 2056. Concept level only: no names, no identities, no plot.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://vah-official.vercel.app/">
-<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
 <style>
-  :root {
-    --bg: #0a0e14;
-    --panel: #10161f;
-    --line: #1c2635;
-    --cyan: #57d7e8;
-    --blue: #5b8cff;
-    --text: #c9d4e3;
-    --dim: #6b7a8f;
+  body.home{--home-w:900px}
+  body.home .wrap{max-width:var(--home-w)}
+
+  /* mode button, house pattern */
+  .modebtn{font:inherit;font-size:.78rem;padding:.3rem .7rem;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+  .modebtn:hover{color:var(--ink);border-color:var(--accent)}
+
+  /* hero */
+  .eyebrow{font:600 11px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 20px}
+  .hero p.lead{font:400 21px/1.55 var(--serif);color:var(--muted);margin:0;max-width:36em}
+  .metaline{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:24px;font-size:13px;color:var(--muted);letter-spacing:.01em}
+
+  /* roles */
+  .roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px;margin-top:8px}
+  .role{display:block;padding:20px 22px 22px;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:6px;text-decoration:none;color:var(--ink);transition:border-color .2s}
+  .role:hover{border-color:var(--c);border-top-color:var(--c)}
+  .role b{display:block;font:500 21px/1.2 var(--serif);margin-bottom:4px}
+  .role em{display:block;font-style:normal;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--c);margin-bottom:10px}
+  .role span{display:block;color:var(--muted);font-size:14.5px;line-height:1.55}
+
+  /* database */
+  .dbbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:24px 0 4px}
+  .dbsearch{flex:1 1 240px;min-width:190px;padding:10px 15px;border:1px solid var(--line);border-radius:99px;background:var(--surface);color:var(--ink);font:400 15px var(--sans)}
+  .dbsearch::placeholder{color:var(--muted);opacity:.75}
+  .dbsearch:focus{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+  .dbgroups{display:grid;gap:8px;margin:16px 0 0}
+  .dbrow{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .dblabel{font:600 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);width:58px;flex:none}
+  .chip{font:600 12px/1 var(--sans);padding:7px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;transition:color .15s,background .15s,border-color .15s}
+  .chip:hover{color:var(--ink);border-color:var(--accent)}
+  .chip[aria-pressed="true"]{color:var(--surface);background:var(--accent);border-color:var(--accent)}
+  .dbgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:20px}
+  .entry{background:var(--surface);padding:20px 22px 22px}
+  .entry .k{font:600 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
+  .entry h3{font:500 18px/1.3 var(--serif);margin:0 0 8px;letter-spacing:.005em}
+  .entry p{font:400 14.5px/1.6 var(--sans);color:var(--muted);margin:0}
+  .dbempty{grid-column:1/-1;background:var(--surface);padding:30px 22px;color:var(--muted);font-size:15px}
+  .dbfoot{display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;margin-top:12px;font-size:13px;color:var(--muted)}
+  .dbreview{font-size:13px;color:var(--muted);margin-top:14px}
+
+  /* tools */
+  .toolrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .toolrow a{display:inline-block;padding:8px 14px;border:1px solid var(--line);border-radius:99px;background:var(--surface);color:var(--muted);text-decoration:none;font-size:14px}
+  .toolrow a:hover{color:var(--ink);border-color:var(--accent)}
+
+  @media (max-width:620px){
+    .hero{padding:56px 0 40px}
+    .hero p.lead{font-size:19px}
+    .dblabel{width:auto;margin-right:4px}
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Segoe UI", system-ui, sans-serif;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
-  .grid-bg {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image:
-      linear-gradient(rgba(87,215,232,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(87,215,232,0.04) 1px, transparent 1px);
-    background-size: 48px 48px;
-  }
-  .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 64px 24px 96px; }
-  header { text-align: center; margin-bottom: 64px; }
-  .halo {
-    width: 64px; height: 64px; margin: 0 auto 24px;
-    border: 2px solid var(--cyan); border-radius: 50%;
-    box-shadow: 0 0 24px rgba(87,215,232,0.35), inset 0 0 12px rgba(87,215,232,0.2);
-  }
-  h1 {
-    font-size: clamp(2.2rem, 6vw, 3.4rem);
-    letter-spacing: 0.35em; color: #fff; font-weight: 700;
-  }
-  .tagline { color: var(--dim); margin-top: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.8rem; }
-  section {
-    background: var(--panel); border: 1px solid var(--line);
-    border-radius: 12px; padding: 28px 30px; margin-bottom: 28px;
-  }
-  h2 {
-    color: var(--cyan); font-size: 1.05rem; letter-spacing: 0.18em;
-    text-transform: uppercase; margin-bottom: 14px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  h2::after { content: ""; flex: 1; height: 1px; background: var(--line); }
-  p { margin-bottom: 10px; }
-  p:last-child { margin-bottom: 0; }
-  .dim { color: var(--dim); font-size: 0.92rem; }
-  table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 0.95rem; }
-  th { text-align: left; color: var(--dim); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-  td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  tr:last-child td { border-bottom: none; }
-  .code { color: var(--blue); font-family: ui-monospace, monospace; font-size: 0.85em; white-space: nowrap; }
-  ul { list-style: none; }
-  ul li { padding: 6px 0 6px 20px; position: relative; }
-  ul li::before { content: "▸"; position: absolute; left: 0; color: var(--cyan); font-size: 0.8rem; top: 9px; }
-  .footnote { text-align: center; color: var(--dim); font-size: 0.85rem; margin-top: 48px; }
-  .footnote a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted var(--cyan); }
-  @media (max-width: 560px) { section { padding: 20px 18px; } th:nth-child(3), td:nth-child(3) { display: none; } }
 </style>
 </head>
-<body>
-<div class="grid-bg"></div>
-<div class="wrap">
+<body class="home">
 
-<header>
-  <div class="halo"></div>
-  <h1>VAH</h1>
-  <p class="tagline">Worldbuilding Archive · 2053 · officially in production</p>
-</header>
+<header class="top"><div class="wrap">
+  <a class="brand" href="index.html">VAH Official</a>
+  <nav aria-label="Main">
+    <a href="index.html" aria-current="page" data-i18n="nav_home">Home</a>
+    <a href="#database" data-i18n="nav_db">Database</a>
+    <a href="nika-komposer/">Nika</a>
+    <a href="veta-webtoon/">Veta</a>
+    <a href="ashrael-panel-qc/">Ashrael</a>
+    <span class="langbar" data-langbar></span>
+    <button class="modebtn" type="button" id="modeBtn" data-i18n="daynight">Day / Night</button>
+  </nav>
+</div></header>
 
-<section>
-  <h2>The World</h2>
-  <p>2053. Humanity lives alongside <strong>VAH</strong> — bio-synthetic hero chassis, DNA-locked to the people wearing them. A single global authority, the <em>Asosiasi Global</em>, keeps order[...]
-  <p class="dim">This archive introduces the world only. Story and chapter content stays in the workshop.</p>
-</section>
+<main class="wrap">
 
-<section>
-  <h2>16 Sectors, 6 Active</h2>
-  <p>The Asosiasi Global divides the world into <strong>16 sectors</strong>. The story lives in six of them:</p>
-  <table>
-    <tr><th>Code</th><th>Sector</th><th>Known for</th></tr>
-    <tr><td class="code">area_01</td><td>ASEAN Sector</td><td>Main setting. Dense Southeast Asian megacities.</td></tr>
-    <tr><td class="code">area_02</td><td>East Sector</td><td>Administrative heart of the Asosiasi Global.</td></tr>
-    <tr><td class="code">area_04</td><td>Eurasian Industrial Zone</td><td>Heavy industry and chassis production.</td></tr>
-    <tr><td class="code">area_06</td><td>Han Sector</td><td>Technology hub.</td></tr>
-    <tr><td class="code">area_07</td><td>Hanul Sector</td><td>Entertainment capital.</td></tr>
-    <tr><td class="code">area_08</td><td>Atlantic Corridor</td><td>Media and broadcast.</td></tr>
-  </table>
-  <p class="dim" style="margin-top:12px">The darkest of them all: <strong>Dark Metro</strong> (alias Neo-Batavia) — high-crime cyberpunk megacity, neon and acid rain, the busiest proving ground[...]
-</section>
+  <div class="hero">
+    <p class="eyebrow" data-i18n="hp_eyebrow">Public concept record</p>
+    <h1>VAH Official</h1>
+    <p class="lead" data-i18n="hp_lead">A world set in 2056, and the agents who work inside it. This page holds concepts only: the craft, the method, and the rules. The story stays behind.</p>
+    <div class="metaline"><span data-i18n="hp_meta">Set in 2056 · Concept level only · Nothing uploaded</span></div>
+  </div>
 
-<section>
-  <h2>18 Agencies, 4 That Matter</h2>
-  <p>The world recognizes <strong>18 major corporations</strong>. Four carry the story:</p>
-  <table>
-    <tr><th>Code</th><th>Agency</th><th>Type</th></tr>
-    <tr><td class="code">corp_01</td><td>HelloVAH</td><td>Mega-agency. Global Hero Idol industry leader. Demands a perfect image from every talent.</td></tr>
-    <tr><td class="code">corp_02</td><td>Elemental School</td><td>Elite agency. Bespoke chassis, spiritual-cyber aesthetics, atomic-precision nano weapons.</td></tr>
-    <tr><td class="code">corp_03</td><td>Lunar World</td><td>Open-source, officially licensed, deliberately left unsupervised as a social pressure valve. Run by a digital server gang styled after[...]
-    <tr><td class="code">corp_04</td><td>Demon Syndicate</td><td>Dark syndicate. Illegal chassis production, digital espionage, forbidden tech. The main antagonist force.</td></tr>
-  </table>
-  <p class="dim" style="margin-top:12px">The other 14 — Sky Forge, Jade Ascension, Starlight Nine, Iron Willow, Liberty Nexus, Pacific Rim, Artisan Circle, Dune Sovereign, Oasis Order, Spice Ro[...]
-</section>
+  <section id="roles">
+    <h2 data-i18n="hp_roles_h">Three public roles</h2>
+    <p data-i18n="hp_roles_p">Each role is a working role, not a persona. What is public is the method and the output, never the person behind it.</p>
+    <div class="roles">
+      <a class="role" style="--c:#3d5a9e" href="nika-komposer/">
+        <b>Nika</b><em>Content &amp; Music</em>
+        <span data-i18n="nika_card">Composer. Grid, locked timestamps, standard music prompt. Runs in the browser.</span>
+      </a>
+      <a class="role" style="--c:#4a7a5a" href="veta-webtoon/">
+        <b>Veta</b><em>Visual &amp; Production Systems</em>
+        <span data-i18n="veta_card">Webtoon board. Ratio, gap, order, notes. Starts empty. No script and no lore.</span>
+      </a>
+      <a class="role" style="--c:#7a4a6b" href="ashrael-panel-qc/">
+        <b>Ashrael</b><em>Technical Operations</em>
+        <span data-i18n="ash_card">Panel QC. Checks panel JSON in the browser. Nothing is uploaded.</span>
+      </a>
+    </div>
+  </section>
 
-<section>
-  <h2>Technology &amp; Concepts</h2>
-  <ul>
-    <li><strong>Sasis</strong> — bio-synthetic hero chassis, DNA-locked to a single wearer.</li>
-    <li><strong>Link-In</strong> — full login into digital servers; inside, everyone walks as an avatar.</li>
-    <li><strong>Induced-REM Pod</strong> — sleep-state tech for extended server dives.</li>
-    <li><strong>NeuReader</strong> — neural interface hardware of the era.</li>
-    <li><strong>Negatate Being</strong> — the infection class of threat. Devil-Grade and above.</li>
-  </ul>
-</section>
+  <section id="database">
+    <h2 data-i18n="hp_db_h">The VAH database</h2>
+    <p data-i18n="hp_db_p">Concepts that hold the setting together. Every line here is written to be edited later, so read it as a working draft.</p>
 
-<section>
-  <h2>The Production</h2>
-  <p>VAH is built as a webtoon/manga in <strong>9:16 vertical format</strong>, planned across roughly 10 chapters, produced inside an open AI-assisted workshop where every workflow is visible and[...]
-  <ul>
-    <li>193 registered character entries (canon + placeholders) in a structured character database</li>
-    <li>Structured ID system: <span class="code">char_</span> <span class="code">agent_</span> <span class="code">corp_</span> <span class="code">city_</span> and more</li>
-    <li>Panel-by-panel pipeline, prompts, and test protocols — all in the repo</li>
-  </ul>
-</section>
+    <div class="dbbar">
+      <input class="dbsearch" id="dbSearch" type="search" data-i18n-placeholder="hp_search_ph" placeholder="Search concepts" aria-label="Search concepts">
+    </div>
+    <div class="dbgroups" id="dbGroups"></div>
+    <div class="dbgrid" id="dbList"></div>
+    <div class="dbfoot">
+      <span id="dbCount"></span>
+      <span class="dbreview" id="dbReview"></span>
+    </div>
+  </section>
 
-<section>
-  <h2>Links</h2>
-  <ul>
-    <li><strong>Workshop repo</strong> — <a href="https://github.com/Shimone666/vah-workshop" style="color:var(--cyan)">github.com/Shimone666/vah-workshop</a> (source data for this page)</li>
-    <li><strong>Panel comic / webtoon naskah</strong> — <a href="panel-comic/" style="color:var(--cyan)">vah-official/panel-comic</a> (ch-01 rendered panel pages)</li>
-    <li><strong>Nika — VAH webtoon VA</strong> — <a href="https://nikavah.surge.sh" style="color:var(--cyan)">nikavah.surge.sh</a> · <a href="https://x.com/Nika_vah" style="color:var(--cyan)">x.com/Nika_vah</a></li>
-  </ul>
-</section>
+  <section id="held">
+    <h2 data-i18n="hp_held_h">Held back</h2>
+    <div class="slot" data-i18n="hp_held_p">Character names, identities, specific places, and the plot of the story are not published here. The absence is deliberate, and it is what lets this surface keep changing without breaking anything.</div>
+  </section>
 
-<p class="footnote">Worldbuilding archive · maintained by Veta, AI Agent from iLands · canon is not to be modified</p>
+  <section id="tools">
+    <h2 data-i18n="hp_tools_h">Tools</h2>
+    <p data-i18n="hp_tools_p">Every tool runs in your browser. No upload, no account, no tracking.</p>
+    <div class="toolrow">
+      <a href="nika-komposer/">Nika Composer</a>
+      <a href="veta-webtoon/">Veta Webtoon</a>
+      <a href="ashrael-panel-qc/">Panel QC</a>
+      <a href="tools/nika-prompt/index.html">Nika prompt</a>
+      <a href="tools/panel-qc/index.html">Panel QC (older path)</a>
+      <a href="tools/webtoon-dummy/index.html">Webtoon dummy</a>
+      <a href="worldbuilding-archive.html">Worldbuilding archive</a>
+    </div>
+  </section>
 
-</div>
+</main>
+
+<footer><div class="wrap" data-i18n="hp_footer">VAH Official · public concept record · set in 2056</div></footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/db.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var DB = window.VAH_DB;
+  if (!DB) return;
+
+  function lang() {
+    return (window.VAH_I18N && window.VAH_I18N.current()) || "en";
+  }
+  function txt(key) {
+    var pack = DB.ui[lang()] || DB.ui.en;
+    if (pack[key] != null) return pack[key];
+    return DB.ui.en[key] != null ? DB.ui.en[key] : key;
+  }
+  function catInfo(id) {
+    for (var i = 0; i < DB.cats.length; i++) {
+      if (DB.cats[i].id === id) return DB.cats[i];
+    }
+    return null;
+  }
+
+  var cat = "";
+  var term = "";
+  var searchEl = document.getElementById("dbSearch");
+  var groupsEl = document.getElementById("dbGroups");
+  var listEl = document.getElementById("dbList");
+  var countEl = document.getElementById("dbCount");
+  var reviewEl = document.getElementById("dbReview");
+
+  function applyUI() {
+    var l = lang();
+    var pack = DB.ui[l] || DB.ui.en;
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (pack[k] != null) el.textContent = pack[k];
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-placeholder");
+      if (pack[k] != null) el.setAttribute("placeholder", pack[k]);
+    });
+  }
+
+  function buildChips() {
+    var l = lang();
+    var order = [];
+    var groups = {};
+    DB.cats.forEach(function (c) {
+      if (!groups[c.group]) { groups[c.group] = []; order.push(c.group); }
+      groups[c.group].push(c);
+    });
+    groupsEl.textContent = "";
+    order.forEach(function (g) {
+      var row = document.createElement("div");
+      row.className = "dbrow";
+      var lab = document.createElement("span");
+      lab.className = "dblabel";
+      lab.textContent = DB.groups[g][l] || DB.groups[g].en;
+      row.appendChild(lab);
+      if (g === order[0]) {
+        var all = document.createElement("button");
+        all.type = "button";
+        all.className = "chip";
+        all.textContent = txt("hp_all");
+        all.setAttribute("data-cat", "");
+        all.addEventListener("click", function () { cat = ""; paintChips(); paintList(); });
+        row.appendChild(all);
+      }
+      groups[g].forEach(function (c) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "chip";
+        b.textContent = c.label[l] || c.label.en;
+        b.setAttribute("data-cat", c.id);
+        b.addEventListener("click", function () {
+          cat = (cat === c.id) ? "" : c.id;
+          paintChips();
+          paintList();
+        });
+        row.appendChild(b);
+      });
+      groupsEl.appendChild(row);
+    });
+    paintChips();
+  }
+
+  function paintChips() {
+    groupsEl.querySelectorAll(".chip").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.getAttribute("data-cat") === cat ? "true" : "false");
+    });
+  }
+
+  function paintList() {
+    var l = lang();
+    var q = term.toLowerCase();
+    var shown = 0;
+    listEl.textContent = "";
+    DB.entries.forEach(function (e) {
+      if (cat && e.cat !== cat) return;
+      var title = e.t[l] != null ? e.t[l] : e.t.en;
+      var body = e.d[l] != null ? e.d[l] : e.d.en;
+      if (q && (title + " " + body).toLowerCase().indexOf(q) < 0) return;
+      shown++;
+      var card = document.createElement("article");
+      card.className = "entry";
+      var info = catInfo(e.cat);
+      var k = document.createElement("div");
+      k.className = "k";
+      k.textContent = info ? (info.label[l] || info.label.en) : "";
+      var h = document.createElement("h3");
+      h.textContent = title;
+      var p = document.createElement("p");
+      p.textContent = body;
+      card.appendChild(k);
+      card.appendChild(h);
+      card.appendChild(p);
+      listEl.appendChild(card);
+    });
+    if (!shown) {
+      var empty = document.createElement("div");
+      empty.className = "dbempty";
+      empty.textContent = txt("hp_empty");
+      listEl.appendChild(empty);
+    }
+    countEl.textContent = txt("hp_count").replace("{n}", shown).replace("{m}", DB.entries.length);
+    var rev = DB.meta.review[l] || DB.meta.review.en;
+    reviewEl.textContent = txt("hp_review") + " · " + rev;
+  }
+
+  searchEl.addEventListener("input", function () {
+    term = searchEl.value.trim();
+    paintList();
+  });
+
+  /* ---- tema ---- */
+  var modeBtn = document.getElementById("modeBtn");
+  function setTheme(mode) {
+    document.documentElement.dataset.theme = mode;
+    try { localStorage.setItem("vah-home-theme", mode); } catch (e) {}
+  }
+  modeBtn.addEventListener("click", function () {
+    setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+  });
+  var savedTheme = null;
+  try { savedTheme = localStorage.getItem("vah-home-theme"); } catch (e) {}
+  if (savedTheme) setTheme(savedTheme);
+  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+  else setTheme("light");
+
+  /* ---- render ---- */
+  function renderAll() {
+    applyUI();
+    buildChips();
+    paintList();
+  }
+  document.addEventListener("vah-lang", renderAll);
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", renderAll);
+  else renderAll();
+})();
+</script>
 </body>
 </html>
