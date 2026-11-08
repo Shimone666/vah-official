@@ -113,17 +113,17 @@
   <div class="toolbar-top">
     <div>
       <h1 style="font:500 30px/1.15 var(--sans);margin:0 0 4px;color:#9a84c7">Nika Composer</h1>
-      <p class="muted" style="margin:0;font-size:.9rem" data-i18n="nika_sub">Grid beat · timestamp terkunci · prompt musik format standar</p>
+      <p class="muted" style="margin:0;font-size:.9rem" data-i18n="nika_sub">Grid beat · locked timestamp · standard music prompt</p>
     </div>
     <div class="btnrow">
-      <button class="b" type="button" onclick="addLine()" data-i18n="nika_addline">+ Baris</button>
-      <button class="b" type="button" onclick="addSection()" data-i18n="nika_addsec">+ Sub judul</button>
+      <button class="b" type="button" onclick="addLine()" data-i18n="nika_addline">+ Line</button>
+      <button class="b" type="button" onclick="addSection()" data-i18n="nika_addsec">+ Section</button>
       <button class="b" type="button" onclick="addInstrumental()" data-i18n="nika_addins">+ Instrumental</button>
-      <button class="b" type="button" onclick="ensureInstrGaps()" data-i18n="nika_gaps">Isi jeda instrumental</button>
+      <button class="b" type="button" onclick="ensureInstrGaps()" data-i18n="nika_gaps">Fill instrumental gaps</button>
       <button class="b" type="button" onclick="recalcAll()" data-i18n="nika_recalc">Recalc timestamp</button>
       <button class="b solid" type="button" onclick="exportAll()" data-i18n="nika_export">Refresh export</button>
-      <button class="b ghost" type="button" onclick="saveLocal()" data-i18n="nika_save">Save lokal</button>
-      <button class="b ghost" type="button" onclick="loadLocal()" data-i18n="nika_load">Load lokal</button>
+      <button class="b ghost" type="button" onclick="saveLocal()" data-i18n="nika_save">Save local</button>
+      <button class="b ghost" type="button" onclick="loadLocal()" data-i18n="nika_load">Load local</button>
     </div>
   </div>
 
@@ -131,44 +131,44 @@
     <!-- ============ SIDEBAR ============ -->
     <aside>
       <div class="panel">
-        <h2 data-i18n="nika_proj">Proyek</h2>
-        <div class="field"><label for="title" data-i18n="nika_title">Judul / konsep</label><input id="title" placeholder="Judul lagu / konsep MV"></div>
+        <h2 data-i18n="nika_proj">Project</h2>
+        <div class="field"><label for="title" data-i18n="nika_title">Title / concept</label><input id="title" data-i18n-placeholder="nika_title_ph" placeholder="Song title / MV concept"></div>
         <div class="field"><label for="bpm">BPM</label><input id="bpm" class="mono" type="number" min="40" max="240" step="1" value="120"></div>
         <div class="field"><label for="tsig">Time signature</label>
           <select id="tsig"><option value="4/4" selected>4/4</option><option value="3/4">3/4</option><option value="6/8">6/8</option></select>
         </div>
-        <div class="field"><label for="style" data-i18n="nika_style">Style musik (global)</label><textarea id="style" rows="3" placeholder="synthpop, 120 BPM, female vocal, clean mix"></textarea></div>
+        <div class="field"><label for="style" data-i18n="nika_style">Music style (global)</label><textarea id="style" rows="3" placeholder="synthpop, 120 BPM, female vocal, clean mix"></textarea></div>
         <div class="btnrow">
           <button class="b ghost" type="button" data-style-preset="synthpop, female vocal, clean mix, emotional but bright">Synthpop</button>
           <button class="b ghost" type="button" data-style-preset="cinematic ballad, atmospheric piano and strings, restrained slow build, warm not dark">Ballad</button>
           <button class="b ghost" type="button" data-style-preset="lo-fi, dusty drums, warm keys, relaxed">Lo-fi</button>
-          <button class="b ghost" type="button" data-style-preset="acoustic, fingerpicked guitar, intimate close-mic, natural room">Akustik</button>
+          <button class="b ghost" type="button" data-style-preset="acoustic, fingerpicked guitar, intimate close-mic, natural room" data-i18n="nika_acoustic">Acoustic</button>
         </div>
       </div>
 
       <div class="panel">
-        <h2 data-i18n="nika_new">Default baris baru</h2>
-        <div class="field"><label for="defaultDur">Durasi default (detik)</label>
+        <h2 data-i18n="nika_new">New line defaults</h2>
+        <div class="field"><label for="defaultDur" data-i18n="nika_defdur">Default duration (seconds)</label>
           <select id="defaultDur"><option value="4" selected>4</option><option value="6">6</option><option value="8">8</option><option value="2">2</option><option value="10">10</option></select>
         </div>
-        <div class="field"><label for="defaultSection">Nama sub judul default</label><input id="defaultSection" class="mono" placeholder="Verse 1 / Chorus…" value="Verse 1"></div>
-        <div class="field"><label for="defaultRole">Role default</label>
+        <div class="field"><label for="defaultSection" data-i18n="nika_defsec">Default section name</label><input id="defaultSection" class="mono" placeholder="Verse 1 / Chorus…" value="Verse 1"></div>
+        <div class="field"><label for="defaultRole" data-i18n="nika_defrole">Default role</label>
           <select id="defaultRole">
             <option value="sing" selected>sing</option><option value="build">build</option><option value="hold">hold</option>
             <option value="drop">drop</option><option value="breath">breath</option><option value="instrumen">instrumen</option>
           </select>
         </div>
-        <div class="field"><label for="instrDur">Durasi instrumental (detik) — tombol Isi jeda</label>
+        <div class="field"><label for="instrDur" data-i18n="nika_instrdur">Instrumental duration (seconds), fill-gap button</label>
           <select id="instrDur"><option value="4" selected>4</option><option value="6">6</option><option value="8">8</option><option value="2">2</option></select>
         </div>
       </div>
 
       <!-- ===== PROMPT MUSIK STANDAR ===== -->
       <div class="panel">
-        <h2 data-i18n="nika_prompt">Prompt musik standar</h2>
-        <p class="hint" style="margin:0 0 10px">Format blok: <code>[TIME]</code> lalu tag <code>[COMBO]</code> satu per kurung, lalu baris lirik. Pilih tag di bawah — hasilnya ditulis ke kolom <strong>Prompt musik</strong>.</p>
+        <h2 data-i18n="nika_prompt">Standard music prompt</h2>
+        <p class="hint" style="margin:0 0 10px" data-i18n="nika_fmt">Block format: <code>[TIME]</code>, then one <code>[COMBO]</code> tag per bracket, then the lyric line. Pick tags below. The result is written to the Music prompt column.</p>
 
-        <div class="field"><label>Instrumen</label>
+        <div class="field"><label data-i18n="nika_inst">Instruments</label>
           <div class="tagset" id="tagInst">
             <label><input type="checkbox" value="PIANO">PIANO</label>
             <label><input type="checkbox" value="STRINGS">STRINGS</label>
@@ -183,7 +183,7 @@
           </div>
         </div>
 
-        <div class="field"><label>Tekstur</label>
+        <div class="field"><label data-i18n="nika_tex">Texture</label>
           <div class="tagset" id="tagTexture">
             <label><input type="checkbox" value="SOFT">SOFT</label>
             <label><input type="checkbox" value="AIRY">AIRY</label>
@@ -207,7 +207,7 @@
           </div>
         </div>
 
-        <div class="field"><label>Dinamika</label>
+        <div class="field"><label data-i18n="nika_dyn">Dynamics</label>
           <div class="tagset" id="tagDyn">
             <label><input type="checkbox" value="INTIMATE">INTIMATE</label>
             <label><input type="checkbox" value="BUILD">BUILD</label>
@@ -219,15 +219,15 @@
         </div>
 
         <div class="field" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div><label for="tagKey">Key (opsional)</label><input id="tagKey" class="mono" placeholder="KEY=Am"></div>
-          <div><label for="tagTempo">Tempo (opsional)</label><input id="tagTempo" class="mono" placeholder="TEMPO=82"></div>
+          <div><label for="tagKey" data-i18n="nika_key">Key (optional)</label><input id="tagKey" class="mono" placeholder="KEY=Am"></div>
+          <div><label for="tagTempo" data-i18n="nika_tempo">Tempo (optional)</label><input id="tagTempo" class="mono" placeholder="TEMPO=82"></div>
         </div>
 
-        <div class="field"><label for="targetRow">Terapkan ke baris</label><select id="targetRow"></select></div>
+        <div class="field"><label for="targetRow" data-i18n="nika_target">Apply to row</label><select id="targetRow"></select></div>
         <div class="btnrow">
-          <button class="b solid" type="button" onclick="applyStandardPrompt()">Terapkan ke baris</button>
-          <button class="b" type="button" onclick="copyStandardTags()">Copy tag</button>
-          <button class="b ghost" type="button" onclick="resetStandardTags()">Reset</button>
+          <button class="b solid" type="button" onclick="applyStandardPrompt()" data-i18n="nika_apply">Apply to row</button>
+          <button class="b" type="button" onclick="copyStandardTags()" data-i18n="nika_copytag">Copy tags</button>
+          <button class="b ghost" type="button" onclick="resetStandardTags()" data-i18n="nika_reset">Reset</button>
         </div>
       </div>
 
@@ -238,17 +238,17 @@
           <textarea id="pasteLyrics" rows="8" placeholder="[00:00–00:06]&#10;[PIANO][SOFT][MELANCHOLIC]&#10;line one&#10;&#10;[Verse 1]&#10;line two"></textarea>
         </div>
         <div class="btnrow">
-          <button class="b" type="button" onclick="importLyrics(false)">Tambah dari paste</button>
-          <button class="b solid" type="button" onclick="importLyrics(true)">Reset dari paste</button>
-          <button class="b ghost" type="button" onclick="pushFormulaToPaste()">Export → paste</button>
-          <button class="b ghost" type="button" onclick="clearPasteText()">Hapus paste</button>
+          <button class="b" type="button" onclick="importLyrics(false)" data-i18n="nika_pasteadd">Add from paste</button>
+          <button class="b solid" type="button" onclick="importLyrics(true)" data-i18n="nika_pastereset">Reset from paste</button>
+          <button class="b ghost" type="button" onclick="pushFormulaToPaste()" data-i18n="nika_pasteexp">Export to paste</button>
+          <button class="b ghost" type="button" onclick="clearPasteText()" data-i18n="nika_pasteclr">Clear paste</button>
         </div>
-        <p class="hint">Dua format diterima: blok standar <code>[00:00–00:06]</code> + tag <code>[PIANO][SOFT]</code> + lirik, dan baris satu <code>[00:00.00-00:04.00][Am][soft] lirik</code>. Sub judul pakai <code>[nama]</code>.</p>
+        <p class="hint" data-i18n="nika_pastehint">Two formats: a standard block <code>[00:00–00:06]</code> + tags <code>[PIANO][SOFT]</code> + lyric, or one line <code>[00:00.00-00:04.00][Am][soft] lyric</code>. A section uses <code>[name]</code>.</p>
       </div>
 
       <div class="panel">
-        <h2 data-i18n="nika_priv">Privasi</h2>
-        <p class="hint" data-i18n="nika_priv_p">Semua berjalan di browser. Tidak ada unggahan file, tidak ada panggilan jaringan dari tool ini. Isi disimpan di localStorage browser bila kamu menekan Save lokal.</p>
+        <h2 data-i18n="nika_priv">Privacy</h2>
+        <p class="hint" data-i18n="nika_priv_p">Runs in the browser. No file upload. No network call from this tool. Save local keeps a copy in this browser only.</p>
       </div>
     </aside>
 
@@ -256,7 +256,7 @@
     <section>
       <div class="workhead">
         <span>Total: <strong id="statDuration">00:00.00</strong></span>
-        <span>Baris: <strong id="statLines">0</strong></span>
+        <span><span data-i18n="nika_stat_rows">Rows</span>: <strong id="statLines">0</strong></span>
         <span>BPM: <strong id="statBpm">120</strong></span>
         <span class="lock">● lock 00:00.00</span>
       </div>
@@ -264,8 +264,8 @@
       <div class="scroller">
         <table>
           <thead><tr>
-            <th>#</th><th>Start</th><th>End</th><th>Dur</th><th>Jenis / nama</th><th>Role</th>
-            <th>Chord</th><th>Lyric</th><th>Prompt musik</th><th>Lipsync</th><th>Aksi</th>
+            <th>#</th><th>Start</th><th>End</th><th>Dur</th><th data-i18n="nika_col_kind">Type / name</th><th>Role</th>
+            <th>Chord</th><th>Lyric</th><th data-i18n="nika_col_prompt">Music prompt</th><th>Lipsync</th><th data-i18n="nika_col_act">Actions</th>
           </tr></thead>
           <tbody id="tbody"></tbody>
         </table>
@@ -273,7 +273,7 @@
 
       <div class="exports">
         <div class="export-box">
-          <h3>Lirik bersih <span>[sub judul] + lirik</span></h3>
+          <h3><span data-i18n="nika_clean">Clean lyrics</span> <span data-i18n="nika_clean_s">[section] + lyric</span></h3>
           <textarea id="outLyrics" class="mono" readonly></textarea>
           <div class="btnrow">
             <button class="b" type="button" onclick="copyText('outLyrics')">Copy</button>
@@ -281,7 +281,7 @@
           </div>
         </div>
         <div class="export-box">
-          <h3>Blok standar <span>[TIME] + [COMBO] + lirik</span></h3>
+          <h3><span data-i18n="nika_block">Standard block</span> <span data-i18n="nika_block_s">[TIME] + [COMBO] + lyric</span></h3>
           <textarea id="outStd" class="mono" readonly></textarea>
           <div class="btnrow">
             <button class="b" type="button" onclick="copyText('outStd')">Copy</button>

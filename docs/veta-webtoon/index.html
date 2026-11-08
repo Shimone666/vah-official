@@ -86,16 +86,16 @@
 <main class="tool-wrap">
   <div style="padding:26px 0 0">
     <h1 style="font:500 32px/1.15 var(--sans);margin:0 0 6px;color:#1497ad">Veta · Webtoon</h1>
-    <p class="muted" style="margin:0 0 4px;max-width:60ch" data-i18n="veta_sub">Panel board untuk menyiapkan setting panel webtoon — rasio, jarak, ukuran, urutan, dan nomor.</p>
-    <p class="muted" style="margin:0;font-size:.86rem" data-i18n="veta_emptyline">Papan ini sengaja kosong. Tidak ada naskah, tidak ada draft cerita, tidak ada lore. Tambah panel kosong bila perlu.</p>
+    <p class="muted" style="margin:0 0 4px;max-width:60ch" data-i18n="veta_sub">Panel board for layout only: ratio, gap, size, order, numbers.</p>
+    <p class="muted" style="margin:0;font-size:.86rem" data-i18n="veta_emptyline">The board starts empty. No script, no draft, no lore. Add an empty panel if you need one.</p>
   </div>
 
   <div class="layout">
     <aside>
       <div class="panel">
-        <h2 data-i18n="veta_set">Setting panel</h2>
+        <h2 data-i18n="veta_set">Panel settings</h2>
         <div class="field">
-          <label for="ar" data-i18n="veta_ratio">Rasio panel</label>
+          <label for="ar" data-i18n="veta_ratio">Panel ratio</label>
           <select id="ar">
             <option value="9/16" selected>9:16 — webtoon</option>
             <option value="3/4">3:4</option>
@@ -105,15 +105,15 @@
           </select>
         </div>
         <div class="field">
-          <label for="maxh" data-i18n="veta_maxh">Tinggi maksimum slot (px)</label>
+          <label for="maxh" data-i18n="veta_maxh">Max slot height (px)</label>
           <input id="maxh" type="number" min="120" max="900" step="10" value="340">
         </div>
         <div class="field">
-          <label for="gutter" data-i18n="veta_gap">Jarak antar panel (px)</label>
+          <label for="gutter" data-i18n="veta_gap">Gap between panels (px)</label>
           <input id="gutter" type="number" min="0" max="60" step="2" value="14">
         </div>
         <div class="field">
-          <label for="cols" data-i18n="veta_cols">Kolom</label>
+          <label for="cols" data-i18n="veta_cols">Columns</label>
           <select id="cols">
             <option value="1">1</option>
             <option value="2" selected>2</option>
@@ -121,39 +121,39 @@
           </select>
         </div>
         <div class="field">
-          <label data-i18n="veta_opts">Pelapan</label>
-          <label class="check"><input type="checkbox" id="notes" checked> <span data-i18n="veta_notes">Tampilkan kolom catatan</span></label>
-          <label class="check"><input type="checkbox" id="numbers" checked> <span data-i18n="veta_nums">Tampilkan nomor panel</span></label>
-          <label class="check"><input type="checkbox" id="ratioHint"> <span data-i18n="veta_hint">Tampilkan rasio pada slot</span></label>
+          <label data-i18n="veta_opts">Options</label>
+          <label class="check"><input type="checkbox" id="notes" checked> <span data-i18n="veta_notes">Show note field</span></label>
+          <label class="check"><input type="checkbox" id="numbers" checked> <span data-i18n="veta_nums">Show panel numbers</span></label>
+          <label class="check"><input type="checkbox" id="ratioHint"> <span data-i18n="veta_hint">Show ratio on the slot</span></label>
         </div>
         <div class="btnrow">
-          <button class="b solid" type="button" id="add" data-i18n="veta_add">+ Panel kosong</button>
-          <button class="b ghost" type="button" id="clearNotes" data-i18n="veta_clearn">Hapus catatan</button>
-          <button class="b ghost" type="button" id="reset" data-i18n="veta_reset">Kosongkan papan</button>
+          <button class="b solid" type="button" id="add" data-i18n="veta_add">+ Empty panel</button>
+          <button class="b ghost" type="button" id="clearNotes" data-i18n="veta_clearn">Clear notes</button>
+          <button class="b ghost" type="button" id="reset" data-i18n="veta_reset">Clear board</button>
         </div>
       </div>
 
       <div class="panel">
-        <h2 data-i18n="veta_priv">Privasi</h2>
-        <p class="hint" data-i18n="veta_priv_p">Semua berjalan di browser. Foto yang dilampirkan hanya dibaca lokal dan tidak pernah diunggah. Setting disimpan di browser ini. Tidak ada lore webtoon di halaman ini.</p>
+        <h2 data-i18n="veta_priv">Privacy</h2>
+        <p class="hint" data-i18n="veta_priv_p">Runs in the browser. A photo is read locally and is never uploaded. Settings stay in this browser. No webtoon lore on this page.</p>
       </div>
 
       <div class="panel">
-        <h2 data-i18n="veta_can">Yang bisa dan tidak bisa</h2>
-        <p class="hint" data-i18n="veta_can_p">Bisa: tambah / hapus panel, ubah urutan, atur rasio, jarak, ukuran, kolom, nomor, catatan. Tidak ada di sini: naskah, dialog, karakter, lore, draft chapter, gambar contoh.</p>
+        <h2 data-i18n="veta_can">What this can and cannot do</h2>
+        <p class="hint" data-i18n="veta_can_p">Can: add or remove panels, change order, set ratio, gap, size, columns, numbers, notes. Not here: script, dialogue, characters, lore, chapter draft, sample art.</p>
       </div>
     </aside>
 
     <section>
       <div id="emptyState" class="empty">
-        <strong data-i18n="veta_board_h">Papan masih kosong</strong>
-        <span data-i18n="veta_board_p">Belum ada panel. Tekan Panel kosong untuk mulai menyiapkan setting.</span>
+        <strong data-i18n="veta_board_h">Board is still empty</strong>
+        <span data-i18n="veta_board_p">No panels yet. Press Empty panel to set the layout.</span>
       </div>
       <div class="board c2" id="board"></div>
 
       <div class="panel sheet">
-        <h2 data-i18n="veta_sheet">Lembar setting panel</h2>
-        <p class="hint" style="margin:0 0 8px" data-i18n="veta_sheet_p">Daftar nomor, rasio, dan setting aktif. Tidak berisi isi cerita.</p>
+        <h2 data-i18n="veta_sheet">Panel setting sheet</h2>
+        <p class="hint" style="margin:0 0 8px" data-i18n="veta_sheet_p">Numbers, ratio, and the active settings. No story text.</p>
         <textarea id="sheet" readonly spellcheck="false"></textarea>
         <div class="btnrow">
           <button class="b" type="button" id="copySheet">Copy</button>
@@ -184,7 +184,12 @@
     sheet: document.getElementById("sheet"),
   };
 
-  let panels = [];   /* { note, url } — url = object URL lokal, tidak pernah diunggah */
+  let panels = [];   /* { note, url } — local object URL, never uploaded */
+
+  function vt(k, fallback) {
+    var v = window.VAH_I18N && VAH_I18N.t ? VAH_I18N.t(k) : k;
+    return !v || v === k ? fallback : v;
+  }
 
   function blank() { return { note: "", url: "" }; }
 
@@ -249,14 +254,14 @@
         img.src = p.url;
         slot.appendChild(img);
       } else {
-        slot.textContent = els.ratioHint.checked ? ("Panel " + (i + 1) + " · " + els.ar.value) : ("Panel " + (i + 1) + " · kosong");
+        slot.textContent = els.ratioHint.checked ? ("Panel " + (i + 1) + " · " + els.ar.value) : ("Panel " + (i + 1) + " · " + vt("veta_empty_slot", "empty"));
       }
 
       const noteRow = document.createElement("div");
       noteRow.className = "note-row";
       const note = document.createElement("input");
       note.type = "text";
-      note.placeholder = "catatan (opsional)";
+      note.placeholder = vt("veta_note_ph", "note (optional)");
       note.value = p.note;
       note.addEventListener("input", function () { p.note = note.value; saveLocal(); buildSheet(); });
       noteRow.appendChild(note);
@@ -279,8 +284,8 @@
       row.appendChild(file,
         makeBtn("↑", function () { move(i, -1); }),
         makeBtn("↓", function () { move(i, 1); }),
-        makeBtn("Hapus foto", function () { if (p.url) { URL.revokeObjectURL(p.url); p.url = ""; } paint(); }),
-        makeBtn("Hapus", function () { if (p.url) URL.revokeObjectURL(p.url); panels.splice(i, 1); paint(); })
+        makeBtn(vt("veta_del_photo", "Remove photo"), function () { if (p.url) { URL.revokeObjectURL(p.url); p.url = ""; } paint(); }),
+        makeBtn(vt("veta_del", "Remove"), function () { if (p.url) URL.revokeObjectURL(p.url); panels.splice(i, 1); paint(); })
       );
 
       card.appendChild(slot);
@@ -303,12 +308,12 @@
     const s = readSettings();
     const lines = [
       "Panel layout sheet — VAH Official · Veta",
-      "Rasio     : " + s.ar,
-      "Tinggi    : " + s.maxh + " px max",
-      "Jarak     : " + s.gutter + " px",
-      "Kolom     : " + s.cols,
-      "Nomor     : " + (s.numbers ? "tampil" : "off"),
-      "Catatan   : " + (s.notes ? "tampil" : "off"),
+      vt("veta_sheet_ratio", "Ratio") + "     : " + s.ar,
+      vt("veta_sheet_h", "Height") + "    : " + s.maxh + " px max",
+      vt("veta_sheet_gap", "Gap") + "     : " + s.gutter + " px",
+      vt("veta_sheet_cols", "Columns") + "     : " + s.cols,
+      vt("veta_sheet_nums", "Numbers") + "     : " + (s.numbers ? vt("veta_on", "on") : vt("veta_off", "off")),
+      vt("veta_sheet_notes", "Notes") + "   : " + (s.notes ? vt("veta_on", "on") : vt("veta_off", "off")),
       "",
       "Panel | Rasio | Catatan",
       "----- + ----- + -------"
@@ -318,7 +323,7 @@
         String(i + 1).padStart(5, " ") + " | " + s.ar.padEnd(5, " ") + " | " + (p.note || "")
       );
     });
-    if (!panels.length) lines.push("  (board kosong)");
+    if (!panels.length) lines.push("  " + vt("veta_board_empty", "(board empty)"));
     els.sheet.value = lines.join("\n");
   }
 
@@ -378,6 +383,7 @@
 
   applySettings();
   paint();
+  document.addEventListener("vah-lang", function () { paint(); });
 })();
 </script>
 </body></html>

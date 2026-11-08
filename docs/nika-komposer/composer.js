@@ -197,6 +197,11 @@ function timeline() {
   });
 }
 
+function ui(k, fallback) {
+  var v = window.VAH_I18N && VAH_I18N.t ? VAH_I18N.t(k) : k;
+  return !v || v === k ? fallback : v;
+}
+
 function escapeAttr(s) {
   return String(s == null ? "" : s)
     .replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
@@ -219,10 +224,10 @@ function render() {
       tr.innerHTML =
         '<td>' + row.index + "</td>" +
         '<td class="ts muted">—</td><td class="ts muted">—</td><td class="muted">0</td>' +
-        '<td colspan="5"><div class="section-bar"><span class="tag">SUB JUDUL</span>' +
+        '<td colspan="5"><div class="section-bar"><span class="tag">' + escapeAttr(ui("nika_subtag", "SECTION")) + '</span>' +
         '<input class="section-name" value="' + escapeAttr(row.name) +
         '" onchange="updateField(\'' + row.id + '\',\'name\',this.value)" ' +
-        'placeholder="Verse 1 / Pre-chorus / Chorus…" title="Nama sub judul — format paste [nama]"></div></td>' +
+        'placeholder="Verse 1 / Pre-chorus / Chorus…" title="' + escapeAttr(ui("nika_sec_title", "Section name. Paste format [name]")) + '"></div></td>' +
         "<td></td><td>" + actionsHtml(row.id) + "</td>";
     } else {
       const instr = isInstr(row);
@@ -235,14 +240,14 @@ function render() {
         '<td class="ts">' + row.end_fmt + "</td>" +
         '<td><input class="num" type="number" min="0.01" step="0.01" value="' + row.duration_s +
         '" onchange="updateField(\'' + row.id + '\',\'duration_s\',this.value)"></td>' +
-        '<td><span class="kind-badge' + (instr ? " instr" : "") + '">' + (instr ? "instrumental" : "baris") + "</span></td>" +
+        '<td><span class="kind-badge' + (instr ? " instr" : "") + '">' + (instr ? "instrumental" : escapeAttr(ui("nika_row", "row"))) + "</span></td>" +
         "<td><select onchange=\"updateField('" + row.id + "','role',this.value)\">" + roleOpts + "</select></td>" +
         '<td><input class="num" style="width:72px;text-align:center;font-family:var(--tool-mono)" value="' + escapeAttr(row.chord) +
         '" onchange="updateField(\'' + row.id + '\',\'chord\',this.value)" placeholder="Am"></td>' +
         '<td><input class="lyric" value="' + escapeAttr(row.lyric) +
-        '" onchange="updateField(\'' + row.id + '\',\'lyric\',this.value)" placeholder="' + (instr ? "(kosong)" : "lirik") + '"></td>' +
+        '" onchange="updateField(\'' + row.id + '\',\'lyric\',this.value)" placeholder="' + escapeAttr(instr ? ui("nika_emptyph", "(empty)") : ui("nika_lyricph", "lyric")) + '"></td>' +
         '<td><input class="prompt" value="' + escapeAttr(row.prompt) +
-        '" onchange="updateField(\'' + row.id + '\',\'prompt\',this.value)" placeholder="' + (instr ? "prompt musik / pad / drums" : "prompt musik") + '"></td>' +
+        '" onchange="updateField(\'' + row.id + '\',\'prompt\',this.value)" placeholder="' + escapeAttr(instr ? ui("nika_promptph_i", "music prompt / pad / drums") : ui("nika_promptph", "music prompt")) + '"></td>' +
         '<td style="text-align:center"><input type="checkbox"' + (row.lipsync ? " checked" : "") + (instr ? " disabled" : "") +
         ' onchange="updateField(\'' + row.id + '\',\'lipsync\',this.checked)"></td>' +
         "<td>" + actionsHtml(row.id) + "</td>";
@@ -259,12 +264,12 @@ function render() {
 
 function actionsHtml(id) {
   return '<div class="acts">' +
-    '<button type="button" title="Baris di atas" onclick="addLineAbove(\'' + id + '\')">+↑</button>' +
-    '<button type="button" title="Baris di bawah" onclick="addLineBelow(\'' + id + '\')">+↓</button>' +
-    '<button type="button" title="Instrumen di atas" onclick="addInstrAbove(\'' + id + '\')">I↑</button>' +
-    '<button type="button" title="Instrumen di bawah" onclick="addInstrBelow(\'' + id + '\')">I↓</button>' +
-    '<button type="button" title="Sub judul di atas" onclick="addSectionAbove(\'' + id + '\')">S↑</button>' +
-    '<button type="button" title="Sub judul di bawah" onclick="addSectionBelow(\'' + id + '\')">S↓</button>' +
+    '<button type="button" title="' + escapeAttr(ui("nika_up_line", "Row above")) + '" onclick="addLineAbove(\'' + id + '\')">+↑</button>' +
+    '<button type="button" title="' + escapeAttr(ui("nika_dn_line", "Row below")) + '" onclick="addLineBelow(\'' + id + '\')">+↓</button>' +
+    '<button type="button" title="' + escapeAttr(ui("nika_up_ins", "Instrument above")) + '" onclick="addInstrAbove(\'' + id + '\')">I↑</button>' +
+    '<button type="button" title="' + escapeAttr(ui("nika_dn_ins", "Instrument below")) + '" onclick="addInstrBelow(\'' + id + '\')">I↓</button>' +
+    '<button type="button" title="' + escapeAttr(ui("nika_up_sec", "Section above")) + '" onclick="addSectionAbove(\'' + id + '\')">S↑</button>' +
+    '<button type="button" title="' + escapeAttr(ui("nika_dn_sec", "Section below")) + '" onclick="addSectionBelow(\'' + id + '\')">S↓</button>' +
     '<button type="button" onclick="moveLine(\'' + id + '\',-1)">↑</button>' +
     '<button type="button" onclick="moveLine(\'' + id + '\',1)">↓</button>' +
     '<button type="button" onclick="removeLine(\'' + id + '\')">×</button>' +
@@ -278,9 +283,9 @@ function renderTargetOptions() {
   const tl = timeline();
   const cur = sel.value || selectedId || "";
   sel.innerHTML = tl.map((r) => {
-    const label = r.index + " · " + (isSection(r) ? "sub judul " + (r.name || "") : isInstr(r) ? "instrumental" : "baris");
+    const label = r.index + " · " + (isSection(r) ? ui("nika_secword", "section") + " " + (r.name || "") : isInstr(r) ? "instrumental" : ui("nika_row", "row"));
     return '<option value="' + r.id + '">' + escapeAttr(label) + "</option>";
-  }).join("") || '<option value="">— belum ada baris —</option>';
+  }).join("") || '<option value="">— ' + escapeAttr(ui("nika_norows", "no rows yet")) + ' —</option>';
   if (cur && tl.some((r) => r.id === cur)) sel.value = cur;
   else if (tl.length) { sel.value = tl[tl.length - 1].id; selectedId = tl[tl.length - 1].id; }
 }
@@ -314,7 +319,7 @@ function applyStandardPrompt() {
   if (!id) { alert("Belum ada baris untuk diisi."); return; }
   const row = lines.find((l) => l.id === id);
   if (!row) return;
-  if (isSection(row)) { alert("Sub judul tidak punya kolom prompt. Pilih baris biasa atau instrumental."); return; }
+  if (isSection(row)) { alert(ui("nika_sec_noprompt", "A section has no prompt column. Pick a normal row or an instrumental.")); return; }
   const tags = buildStandardTags();
   updateField(id, "prompt", tags.join(", "));
   selectedId = id;
@@ -622,7 +627,7 @@ function loadLocal() {
       : [];
     recalcAll();
   } catch (e) {
-    alert("Gagal load data.");
+    alert(ui("nika_loadfail", "Could not load the saved data."));
   }
 }
 
@@ -662,3 +667,4 @@ initChrome();
 lines = [];
 render();
 exportAll();
+document.addEventListener("vah-lang", function () { render(); });
