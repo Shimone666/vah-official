@@ -8,6 +8,7 @@
   var T = {
     en: {
       nav_home: "Home", nav_nika: "Nika", nav_veta: "Veta", nav_ashrael: "Ashrael", nav_tools: "Tools",
+      nav_privacy: "Privacy", nav_terms: "Terms", nav_delete: "Data deletion",
       home_lead: "Public home for three agents. Songs, empty panel boards, and panel checks. Webtoon lore stays empty.",
       home_world_h: "Who is here",
       home_world_p: "Nika holds songs and content. Veta holds an empty webtoon board for layout only. Ashrael holds Panel QC. What shows is the public role, not a story.",
@@ -24,6 +25,7 @@
     },
     id: {
       nav_home: "Beranda", nav_nika: "Nika", nav_veta: "Veta", nav_ashrael: "Ashrael", nav_tools: "Alat",
+      nav_privacy: "Privasi", nav_terms: "Ketentuan", nav_delete: "Hapus data",
       home_lead: "Beranda publik untuk tiga agen. Lagu, papan panel kosong, dan cek panel. Lore webtoon tetap kosong.",
       home_world_h: "Siapa di sini",
       home_world_p: "Nika pegang lagu dan konten. Veta pegang papan webtoon kosong, hanya layout. Ashrael pegang Panel QC. Yang tampil peran publik, bukan cerita.",
@@ -40,6 +42,7 @@
     },
     zh: {
       nav_home: "首页", nav_nika: "Nika", nav_veta: "Veta", nav_ashrael: "Ashrael", nav_tools: "工具",
+      nav_privacy: "隐私", nav_terms: "条款", nav_delete: "删除数据",
       home_lead: "三位角色的公开主页。歌曲、空白分镜板、分镜检查。漫画设定保持空白。",
       home_world_h: "这里是谁",
       home_world_p: "Nika 负责歌曲与内容。Veta 负责空白漫画分镜板，只做版式。Ashrael 负责分镜检查。这里只显示公开职责，不是故事。",
@@ -56,6 +59,7 @@
     },
     ja: {
       nav_home: "ホーム", nav_nika: "Nika", nav_veta: "Veta", nav_ashrael: "Ashrael", nav_tools: "ツール",
+      nav_privacy: "プライバシー", nav_terms: "規約", nav_delete: "データ削除",
       home_lead: "三人の公開ホーム。曲、空のコマ割り、コマ検査。ウェブトゥーンの設定は空のまま。",
       home_world_h: "ここにいる人",
       home_world_p: "Nika は曲とコンテンツ。Veta は空のコマ割り板、レイアウトだけ。Ashrael はコマ検査。公開の役割だけを出す。物語ではない。",
@@ -72,6 +76,7 @@
     },
     ko: {
       nav_home: "홈", nav_nika: "Nika", nav_veta: "Veta", nav_ashrael: "Ashrael", nav_tools: "도구",
+      nav_privacy: "개인정보", nav_terms: "약관", nav_delete: "데이터 삭제",
       home_lead: "세 사람의 공개 홈. 곡, 빈 칸 보드, 칸 검사. 웹툰 설정은 비워 둔다.",
       home_world_h: "여기 있는 사람",
       home_world_p: "Nika는 곡과 콘텐츠. Veta는 빈 웹툰 보드, 레이아웃만. Ashrael은 칸 검사. 공개 역할만 보인다. 이야기가 아니다.",
@@ -262,6 +267,32 @@
     document.dispatchEvent(new CustomEvent("vah-lang", { detail: code }));
   }
 
+  var THEME_KEY = "vah-theme";
+  function setTheme(mode) {
+    if (mode !== "dark" && mode !== "light") mode = "light";
+    document.documentElement.dataset.theme = mode;
+    if (document.body) document.body.dataset.mode = mode === "dark" ? "night" : "day";
+    try { localStorage.setItem(THEME_KEY, mode); } catch (e) {}
+  }
+  function mountTheme() {
+    var btn = document.getElementById("modeBtn");
+    if (btn && !btn.dataset.themeReady) {
+      btn.dataset.themeReady = "1";
+      btn.addEventListener("click", function () {
+        setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+      });
+    }
+    var saved = null;
+    try {
+      saved = localStorage.getItem(THEME_KEY) || localStorage.getItem("vah-home-theme") || localStorage.getItem("veta-webtoon-theme") || localStorage.getItem("ashrael-qc-mode");
+    } catch (e) {}
+    if (saved === "night") saved = "dark";
+    if (saved === "day") saved = "light";
+    if (saved === "dark" || saved === "light") setTheme(saved);
+    else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+    else setTheme("light");
+  }
+
   function mount() {
     document.querySelectorAll("[data-langbar]").forEach(function (bar) {
       if (bar.dataset.ready) return;
@@ -277,10 +308,11 @@
         bar.appendChild(b);
       });
     });
+    mountTheme();
     apply(current());
   }
 
-  window.VAH_I18N = { apply: apply, t: function (k) { return (T[current()] || T.en)[k] || k; }, current: current, langs: LANGS };
+  window.VAH_I18N = { apply: apply, t: function (k) { return (T[current()] || T.en)[k] || k; }, current: current, langs: LANGS, setTheme: setTheme };
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
   else mount();
 })();

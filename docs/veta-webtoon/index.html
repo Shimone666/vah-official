@@ -10,9 +10,7 @@
 <link rel="stylesheet" href="../assets/style.css">
 <style>
   :root{--tool-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
-  body.veta{--accent:#4a7a5a;--accent-soft:#e3efe6}
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body.veta{--accent:#8cc29b;--accent-soft:#1c2a21}}
-  :root[data-theme="dark"] body.veta{--accent:#8cc29b;--accent-soft:#1c2a21}
+  body.veta h1{color:#1497ad}
 
   .tool-wrap{max-width:1200px;margin:0 auto;padding:0 24px}
   .toolnav{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -87,7 +85,7 @@
 
 <main class="tool-wrap">
   <div style="padding:26px 0 0">
-    <h1 style="font:500 32px/1.15 var(--serif);margin:0 0 6px">Veta · Webtoon</h1>
+    <h1 style="font:500 32px/1.15 var(--sans);margin:0 0 6px;color:#1497ad">Veta · Webtoon</h1>
     <p class="muted" style="margin:0 0 4px;max-width:60ch" data-i18n="veta_sub">Panel board untuk menyiapkan setting panel webtoon — rasio, jarak, ukuran, urutan, dan nomor.</p>
     <p class="muted" style="margin:0;font-size:.86rem" data-i18n="veta_emptyline">Papan ini sengaja kosong. Tidak ada naskah, tidak ada draft cerita, tidak ada lore. Tambah panel kosong bila perlu.</p>
   </div>
@@ -355,20 +353,7 @@
     URL.revokeObjectURL(a.href);
   });
 
-  /* ---- tema ---- */
-  const modeBtn = document.getElementById("modeBtn");
-  function setTheme(mode) {
-    document.documentElement.dataset.theme = mode;
-    try { localStorage.setItem("veta-webtoon-theme", mode); } catch (e) {}
-  }
-  modeBtn.addEventListener("click", function () {
-    setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
-  });
-  let savedTheme = null;
-  try { savedTheme = localStorage.getItem("veta-webtoon-theme"); } catch (e) {}
-  if (savedTheme) setTheme(savedTheme);
-  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
-  else setTheme("light");
+  /* theme lives in assets/i18n.js */
 
   /* ---- pulihkan setting (catatan ikut; foto tidak dipulihkan) ---- */
   try {

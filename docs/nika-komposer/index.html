@@ -15,9 +15,7 @@
     --soft:var(--accent-soft);
   }
   html[data-theme="dark"]{--soft:var(--accent-soft)}
-  body.nika{--accent:#3d5a9e;--accent-soft:#e4eaf6}
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) body.nika{--accent:#8fa8e0;--accent-soft:#1d2536}}
-  :root[data-theme="dark"] body.nika{--accent:#8fa8e0;--accent-soft:#1d2536}
+  body.nika h1{color:#9a84c7}
 
   .tool-wrap{max-width:1320px;margin:0 auto;padding:0 24px}
   .toolbar-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 0}
@@ -114,7 +112,7 @@
 <main class="tool-wrap">
   <div class="toolbar-top">
     <div>
-      <h1 style="font:500 30px/1.15 var(--serif);margin:0 0 4px">Nika Composer</h1>
+      <h1 style="font:500 30px/1.15 var(--sans);margin:0 0 4px;color:#9a84c7">Nika Composer</h1>
       <p class="muted" style="margin:0;font-size:.9rem" data-i18n="nika_sub">Grid beat · timestamp terkunci · prompt musik format standar</p>
     </div>
     <div class="btnrow">

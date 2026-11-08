@@ -93,15 +93,15 @@
     <h2 data-i18n="hp_roles_h">Three public roles</h2>
     <p data-i18n="hp_roles_p">Each role is a working role, not a persona. What is public is the method and the output, never the person behind it.</p>
     <div class="roles">
-      <a class="role" style="--c:#3d5a9e" href="nika-komposer/">
+      <a class="role" style="--c:#9a84c7" href="nika-komposer/">
         <b>Nika</b><em>Content &amp; Music</em>
         <span data-i18n="nika_card">Composer. Grid, locked timestamps, standard music prompt. Runs in the browser.</span>
       </a>
-      <a class="role" style="--c:#4a7a5a" href="veta-webtoon/">
+      <a class="role" style="--c:#1497ad" href="veta-webtoon/">
         <b>Veta</b><em>Visual &amp; Production Systems</em>
         <span data-i18n="veta_card">Webtoon board. Ratio, gap, order, notes. Starts empty. No script and no lore.</span>
       </a>
-      <a class="role" style="--c:#7a4a6b" href="ashrael-panel-qc/">
+      <a class="role" style="--c:#a4162a" href="ashrael-panel-qc/">
         <b>Ashrael</b><em>Technical Operations</em>
         <span data-i18n="ash_card">Panel QC. Checks panel JSON in the browser. Nothing is uploaded.</span>
       </a>
@@ -283,20 +283,7 @@
     paintList();
   });
 
-  /* ---- tema ---- */
-  var modeBtn = document.getElementById("modeBtn");
-  function setTheme(mode) {
-    document.documentElement.dataset.theme = mode;
-    try { localStorage.setItem("vah-home-theme", mode); } catch (e) {}
-  }
-  modeBtn.addEventListener("click", function () {
-    setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
-  });
-  var savedTheme = null;
-  try { savedTheme = localStorage.getItem("vah-home-theme"); } catch (e) {}
-  if (savedTheme) setTheme(savedTheme);
-  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
-  else setTheme("light");
+  /* theme lives in assets/i18n.js, one key: vah-theme */
 
   /* ---- render ---- */
   function renderAll() {

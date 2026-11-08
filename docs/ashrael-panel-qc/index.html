@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Panel QC — Ashrael | VAH Official</title>
 <meta name="description" content="Panel JSON check. One color. Day or night. Runs in the browser. Nothing is uploaded.">
+<link rel="stylesheet" href="../assets/style.css">
 <style>
-  :root { --c:#6b3d55; }
+  :root { --c:#a4162a; --sans:"Futura PT",Futura,"Century Gothic","Trebuchet MS",sans-serif; }
   body[data-mode="day"] { --bg:#f8f4f6; --card:#fff; --text:#2c1822; --muted:#7a6570; --line:#eadde3; --field:#fff; --ok:#1f7a45; --warn:#8a5a10; --bad:#a12626; }
   body[data-mode="night"] { --bg:#140f12; --card:#241820; --text:#f6eef2; --muted:#c2aeb6; --line:#4a3340; --field:#140f12; --ok:#7dcea0; --warn:#e0b45c; --bad:#e07a7a; }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 "Segoe UI", system-ui, sans-serif; }
-  header, footer { padding:.9rem 1.1rem; background:var(--card); border-bottom:3px solid var(--c); }
-  footer { border-bottom:0; border-top:3px solid var(--c); color:var(--muted); font-size:.75rem; }
-  h1 { margin:0; font-size:1.15rem; color:var(--c); }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.5 var(--sans); }
+  footer { padding:.9rem 1.1rem; background:var(--card); border-top:1px solid var(--line); color:var(--muted); font-size:.75rem; }
+  h1 { margin:0 0 6px; font-size:1.7rem; color:#a4162a; font-weight:500; letter-spacing:.02em; }
   .sub, header p { color:var(--muted); font-size:.8rem; }
   a { color:var(--c); }
   main { max-width:900px; margin:0 auto; padding:1rem 1.1rem 2.4rem; }
@@ -42,19 +42,24 @@
   .hidden { display:none; }
 .langbar{display:inline-flex;gap:4px}.langbtn{font:600 11px/1 system-ui,sans-serif;padding:4px 7px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}.langbtn[aria-pressed=true]{color:var(--text);border-color:var(--c)}</style>
 </head>
-<body data-mode="night">
-<header>
+<body class="ashrael" data-mode="night">
+<header class="top"><div class="wrap" style="max-width:900px">
+  <a class="brand" href="../index.html">VAH Official</a>
+  <nav aria-label="Main">
+    <a href="../index.html" data-i18n="nav_home">Home</a>
+    <a href="../nika-komposer/">Nika</a>
+    <a href="../veta-webtoon/">Veta</a>
+    <a href="./index.html" aria-current="page">Panel QC</a>
+    <span class="langbar" data-langbar></span>
+    <button class="modebtn" type="button" id="modeBtn" data-i18n="daynight">Day / Night</button>
+  </nav>
+</div></header>
+<main>
   <h1>Ashrael · Panel QC</h1>
   <p class="sub" data-i18n="ash_sub">One color. Checks panel JSON in this browser. Nothing is uploaded.</p>
-  <p><a href="../index.html">VAH Official</a> · <a href="../nika-komposer/">Nika</a> · <a href="../veta-webtoon/">Veta</a> · <span class="langbar" data-langbar></span></p>
-</header>
-<main>
   <div class="card">
     <h2 data-i18n="ash_settings">Settings</h2>
     <div class="bar">
-      <label class="inline">Mode
-        <select id="mode"><option value="day">Day</option><option value="night" selected>Night</option></select>
-      </label>
       <label class="inline">Empty dialogue
         <select id="emptyMode"><option value="warn" selected>Warning</option><option value="bad">Blocking</option></select>
       </label>
@@ -273,17 +278,11 @@ drop.addEventListener("drop", e => {
   rd.readAsText(f);
 });
 
-document.getElementById("mode").addEventListener("change", e => {
-  document.body.dataset.mode = e.target.value;
-  localStorage.setItem("ashrael-qc-mode", e.target.value);
-});
 document.getElementById("emptyMode").addEventListener("change", e => {
   window.QC_EMPTY_BLOCK = e.target.value === "bad";
   localStorage.setItem("ashrael-qc-empty", e.target.value);
 });
 try {
-  const m = localStorage.getItem("ashrael-qc-mode");
-  if (m) { document.body.dataset.mode = m; document.getElementById("mode").value = m; }
   const em = localStorage.getItem("ashrael-qc-empty");
   if (em) { document.getElementById("emptyMode").value = em; window.QC_EMPTY_BLOCK = em === "bad"; }
 } catch (e) {}
