@@ -6,6 +6,7 @@ body.home{--title:#7d868f}
 body.nika{--title:#9a84c7}
 body.veta{--title:#1497ad}
 body.ashrael{--title:#a4162a}
+body.levia{--title:#8a6a3b}
 body.legal{--title:#1a1a1a;--accent:#1a1a1a}
 :root[data-theme="dark"] body.legal{--title:#f2f2f2;--accent:#f2f2f2}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
