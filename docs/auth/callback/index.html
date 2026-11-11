@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OAuth callback — VAH Official</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="legal">
+<header class="top"><div class="wrap">
+<a class="brand" href="../../index.html">VAH Official</a>
+</div></header>
+<main class="wrap">
+<div class="hero"><h1>Sign-in return</h1>
+<p>This page is the Meta OAuth return address for vah-official.uk. The browser may show a code or an error in the address bar. This page does not read it, store it, or send it anywhere.</p>
+<p id="state"></p>
+<p><a href="../../index.html">Back to the site</a></p>
+</div>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var h = new URLSearchParams((location.hash || "").replace(/^#/, ""));
+  var el = document.getElementById("state");
+  if (q.get("error") || h.get("error")) el.textContent = "Meta returned an error. Nothing was saved on this page.";
+  else if (q.get("code") || h.get("access_token") || h.get("code")) el.textContent = "Meta returned a sign-in result. Nothing was saved on this page.";
+  else el.textContent = "No sign-in result in this visit.";
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel QC callback — VAH Official</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="legal">
+<header class="top"><div class="wrap">
+<a class="brand" href="../../index.html">VAH Official</a>
+</div></header>
+<main class="wrap">
+<div class="hero"><h1>Panel QC return</h1>
+<p>This is the Meta return address for Ashrael Panel QC. The page does not read, store, or forward the sign-in result.</p>
+<p id="state"></p>
+<p><a href="../">Open Panel QC</a></p>
+</div>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var el = document.getElementById("state");
+  if (q.get("error")) el.textContent = "Meta returned an error. Nothing was saved.";
+  else if (q.get("code")) el.textContent = "Meta returned a sign-in result. Nothing was saved.";
+  else el.textContent = "No sign-in result in this visit.";
+})();
+</script>
+</body>
+</html>
