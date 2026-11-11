@@ -1,0 +1,14 @@
+{
+  "chapter": 1,
+  "build": "2.03",
+  "pages_in_reader": 8,
+  "pages_planned": 20,
+  "dialog_language": "en",
+  "status": "in-progress",
+  "source": "pribadi/veta/v2.02",
+  "notes": [
+    "Pages 01-08 reviewed and published to the private reader.",
+    "No new pages before ACC on the open canon calls.",
+    "Repo holds structure only; pages live in the reader."
+  ]
+}

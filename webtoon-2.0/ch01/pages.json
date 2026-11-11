@@ -1,0 +1,21 @@
+{
+  "build": "2.03",
+  "chapter": 1,
+  "reader": "https://vah-workshop-vah-official.static.hf.space/",
+  "asset_dir": "assets/panels/ch01",
+  "pages": [
+    { "page": "p01", "file": "assets/panels/ch01/p01.jpg", "dialog": "en-final", "status": "reviewed" },
+    { "page": "p02", "file": "assets/panels/ch01/p02.jpg", "dialog": "en-final", "status": "reviewed" },
+    { "page": "p03", "file": "assets/panels/ch01/p03.jpg", "dialog": "en-final", "status": "reviewed" },
+    { "page": "p04", "file": "assets/panels/ch01/p04.jpg", "dialog": "en-final", "status": "reviewed" },
+    { "page": "p05", "file": "assets/panels/ch01/p05.jpg", "dialog": "en-final", "status": "reviewed" },
+    { "page": "p06", "file": "assets/panels/ch01/p06.jpg", "dialog": "en-final", "status": "reviewed" },
+    { "page": "p07", "file": "assets/panels/ch01/p07.jpg", "dialog": "en-final", "status": "reviewed" },
+    { "page": "p08", "file": "assets/panels/ch01/p08.jpg", "dialog": "en-final", "status": "reviewed" }
+  ],
+  "inserts": [
+    { "panel": "05A", "belongs_to_page": "p05", "published_as_page": false },
+    { "panel": "05B", "belongs_to_page": "p05", "published_as_page": false }
+  ],
+  "pending": "pages 09-20 not drawn; canon calls pending ACC"
+}
