@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TikTok callback — VAH Official</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body class="legal">
+<header class="top"><div class="wrap">
+<a class="brand" href="../../index.html">VAH Official</a>
+</div></header>
+<main class="wrap">
+<div class="hero"><h1>TikTok return</h1>
+<p>This page is the TikTok Login Kit redirect address for vah-official.uk. After someone allows the app, TikTok sends the browser here. The address bar may contain a short code, a state value, or an error. This page does not read that result into storage, and it does not exchange it for a token.</p>
+<p>A token exchange needs the app secret on a server. This site is a static page, so that step stays off this page.</p>
+<p id="state"></p>
+<p><a href="../../index.html">Back to the site</a></p>
+</div>
+</main>
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var el = document.getElementById("state");
+  if (q.get("error")) el.textContent = "TikTok returned an error. Nothing was saved on this page.";
+  else if (q.get("code")) el.textContent = "TikTok returned a sign-in result. Nothing was saved on this page.";
+  else el.textContent = "No sign-in result in this visit.";
+})();
+</script>
+</body>
+</html>
