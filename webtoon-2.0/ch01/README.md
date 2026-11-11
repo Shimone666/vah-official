@@ -1,6 +1,6 @@
 # Chapter 01
 
-State: pages 01-08 reviewed, English dialogue final, live in the private reader on build 2.03.
+State: pages 01-08 reviewed, English dialogue final, live in the private reader on build 2.05.
 Pages 09-20 are not drawn yet; the script stops at page_08 and nothing past it is invented here.
 
 ## Page set in the reader

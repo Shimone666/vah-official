@@ -1,4 +1,4 @@
-# Webtoon 2.0 — build 2.04
+# Webtoon 2.0 — build 2.05
 
 Structure record for the VAH vertical webtoon. This folder holds what the pipeline needs to
 stay in order; the pages themselves live in the private reader, not here.
@@ -6,6 +6,27 @@ stay in order; the pages themselves live in the private reader, not here.
 - Reader (private, owner + invited only): https://vah-workshop-vah-official.static.hf.space/
 - Concept record: https://vah-official.uk/
 - Source set: `pribadi/veta/v2.02` (master, ch-01 script, panelling) — private workspace
+
+## What 2.05 changed
+
+The reader got its reading surface rebuilt to Sayang's brief: content untouched (same 8 pages,
+same dialogue), only the arrangement and UI.
+
+1. Two reading modes, switchable at the top and in the right rail:
+   - **Panel**: one page at a time, large and centred, arrows / wheel / swipe to advance.
+   - **Webtoon**: the classic long scroll, panels joined edge to edge (gutter 0).
+2. A single settings column on the right (layout, panel size, gutter, page). On phones it
+   becomes a drawer behind the gear, so it never crowds the panel edges.
+3. Top bar holds the chapter select and the page picker; on narrow screens the page picker
+   becomes a `03/08` stepper instead of a cramped chip row.
+4. Gutter is a real control (0-32px): spacing between panels in webtoon mode, breathing room
+   around the panel in panel mode. Default 12.
+5. Panel size: fill the screen (default) or fill the width.
+6. Reader preferences (mode, fit, gutter) persist locally; the generated HTML still comes
+   only from `pages.json`.
+
+`build_reader.py` now also emits `data-page` / `data-title` per page and the chapter options
+in the header. Adding a page is still one entry plus one command.
 
 ## What 2.04 changed
 

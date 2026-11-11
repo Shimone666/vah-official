@@ -40,8 +40,10 @@ def render_pages(pages):
         loading = "eager" if i == 0 else "lazy"
         label = ' data-label="%s"' % html.escape(p["label"]) if p.get("label") else ""
         out.append(
-            '    <div class="page"%s><img src="%s" alt="%s" loading="%s"></div>'
-            % (label, html.escape(p["file"]), alt.replace("{CH}", "one"), loading))
+            '    <div class="page" data-page="%s" data-title="%s"%s>'
+            '<img src="%s" alt="%s" loading="%s"></div>'
+            % (html.escape(p["page"]), html.escape((p.get("title") or "").replace('"',"")),
+               label, html.escape(p["file"]), alt.replace("{CH}", "one"), loading))
     return "\n".join(out)
 
 
@@ -58,6 +60,10 @@ def build(meta, pages, template_text, version):
             meta.get("chapter", 1), first[1:], last[1:]),
         "{{END_TITLE}}": html.escape(meta.get("end_title", ""), quote=False),
         "{{END_BODY}}": html.escape(meta.get("end_body", ""), quote=False),
+        "{{CHAPTER_OPTIONS}}": (
+            '<option value="%d" selected>ch.%02d &middot; %s</option>'
+            % (int(meta.get("chapter", 1)), int(meta.get("chapter", 1)),
+               html.escape(meta.get("title", ""), quote=False))),
     }
     text = template_text
     for k, v in fills.items():
