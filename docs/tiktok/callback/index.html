@@ -11,20 +11,29 @@
 <a class="brand" href="../../index.html">VAH Official</a>
 </div></header>
 <main class="wrap">
-<div class="hero"><h1>TikTok return</h1>
-<p>This page is the TikTok Login Kit redirect address for vah-official.uk. After someone allows the app, TikTok sends the browser here. The address bar may contain a short code, a state value, or an error. This page does not read that result into storage, and it does not exchange it for a token.</p>
-<p>A token exchange needs the app secret on a server. This site is a static page, so that step stays off this page.</p>
-<p id="state"></p>
+<div class="hero"><h1>TikTok callback</h1>
+<p>Redirect URI: https://vah-official.uk/tiktok/callback/</p>
+<p>Login Kit returns code, scopes, and state on this address. This page shows those values. It does not store them and it does not exchange the code for a token.</p>
+<ul>
+<li>code: <span id="code">—</span></li>
+<li>scopes: <span id="scopes">—</span></li>
+<li>state: <span id="state">—</span></li>
+<li>error: <span id="error">—</span></li>
+</ul>
 <p><a href="../../index.html">Back to the site</a></p>
 </div>
 </main>
 <script>
 (function () {
   var q = new URLSearchParams(location.search);
-  var el = document.getElementById("state");
-  if (q.get("error")) el.textContent = "TikTok returned an error. Nothing was saved on this page.";
-  else if (q.get("code")) el.textContent = "TikTok returned a sign-in result. Nothing was saved on this page.";
-  else el.textContent = "No sign-in result in this visit.";
+  function show(id, key) {
+    var v = q.get(key);
+    document.getElementById(id).textContent = v ? v : "—";
+  }
+  show("code", "code");
+  show("scopes", "scopes");
+  show("state", "state");
+  show("error", "error");
 })();
 </script>
 </body>
